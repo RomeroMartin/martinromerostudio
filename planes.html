@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planes y Precios · Martin Romero Studio</title>
+<meta name="description" content="Planes de diseño web claros y transparentes. Landing page, sitio completo, webapps y más. La Plata, Buenos Aires.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='56' height='56' rx='10' fill='%23f0e4cc'/%3E%3Ctext x='28' y='36' font-family='Georgia%2Cserif' font-size='22' font-weight='700' letter-spacing='1' fill='%231c1c1a' text-anchor='middle'%3EMR%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --negro:#1c1c1a; --blanco:#fafaf7; --acento:#c8a96e;
+  --acento-claro:#f0e4cc; --arena:#ede5d8; --crema:#f7f2ea;
+  --verde:#4a7c59; --verde-claro:#d4e8da;
+  --gris:#6b6b68; --gris-claro:#e8e4dc;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--negro);line-height:1.6;overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(240,228,204,0.97);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--gris-claro);transition:box-shadow 0.4s;}
+nav.scrolled{box-shadow:0 2px 12px rgba(0,0,0,0.08);}
+.nav-logo svg{display:block;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{text-decoration:none;font-size:0.8rem;font-weight:500;color:var(--gris);letter-spacing:0.05em;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--negro);}
+.nav-cta{background:var(--negro);color:var(--blanco)!important;padding:0.45rem 1.1rem;border-radius:6px;font-size:0.78rem!important;transition:background 0.2s!important;}
+.nav-cta:hover{background:var(--acento)!important;color:var(--negro)!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--negro);transition:all 0.3s;}
+@media(max-width:680px){.nav-links{display:none;}.hamburger{display:flex;}nav{padding:1rem 1.25rem;}}
+
+/* ── FLOTANTES ── */
+.li-float{position:fixed;bottom:5.5rem;right:2rem;z-index:200;width:46px;height:46px;border-radius:50%;background:var(--negro);border:1.5px solid var(--acento);display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:0.7;transition:opacity 0.4s ease,background 0.2s,box-shadow 0.2s;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
+.li-float:hover{opacity:1!important;background:#0a4d7a;box-shadow:0 4px 18px rgba(0,0,0,0.2);}
+.li-float svg{width:20px;height:20px;}
+.wsp-float{position:fixed;bottom:2rem;right:2rem;z-index:200;width:46px;height:46px;border-radius:50%;background:var(--negro);border:1.5px solid var(--acento);display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:0.7;box-shadow:0 2px 12px rgba(0,0,0,0.15);transition:opacity 0.4s ease,background 0.2s,box-shadow 0.2s;}
+.wsp-float:hover{opacity:1!important;background:#1a3520;box-shadow:0 4px 18px rgba(0,0,0,0.2);}
+.wsp-float svg{width:22px;height:22px;}
+
+/* ── HERO ── */
+.planes-hero{padding:9rem 2rem 4rem;text-align:center;background:var(--crema);position:relative;overflow:hidden;}
+.planes-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% 20%,rgba(200,169,110,0.1) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 20% 80%,rgba(74,124,89,0.06) 0%,transparent 55%);pointer-events:none;}
+.hero-inner{max-width:700px;margin:0 auto;position:relative;z-index:1;}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:0.75rem;font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--acento);font-weight:600;margin-bottom:1rem;}
+.eyebrow::before,.eyebrow::after{content:'';display:inline-block;width:24px;height:1px;background:var(--acento);}
+.hero-titulo{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:700;line-height:1.0;margin-bottom:1rem;}
+.hero-titulo em{font-style:italic;color:var(--acento);}
+.hero-sub{font-size:1rem;color:var(--gris);font-weight:300;max-width:460px;margin:0 auto;line-height:1.7;}
+
+/* ── TABS NAV ── */
+.tabs-nav{display:flex;justify-content:center;gap:0.5rem;padding:0 1rem 3rem;flex-wrap:wrap;}
+.tab-btn{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:500;padding:0.5rem 1.25rem;border-radius:20px;border:1.5px solid var(--gris-claro);background:transparent;color:var(--gris);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.tab-btn:hover{border-color:var(--acento);color:var(--negro);}
+.tab-btn.active{background:var(--negro);color:var(--blanco);border-color:var(--negro);}
+
+/* ── SECCIÓN ── */
+.seccion{display:none;max-width:1000px;margin:0 auto;padding:0 1.5rem 5rem;}
+.seccion.visible{display:block;}
+.section-label{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);font-weight:500;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--gris-claro);}
+.section-desc{font-size:0.88rem;color:var(--gris);font-weight:300;margin-bottom:2rem;max-width:560px;line-height:1.7;}
+
+/* ── TARJETAS PLANES PAGO ÚNICO ── */
+.planes-grid{display:grid;grid-template-columns:repeat(3,minmax(0,320px));gap:14px;margin-bottom:2rem;justify-content:center;}
+@media(max-width:900px){
+  .planes-grid{grid-template-columns:repeat(2,minmax(0,340px));}
+  .planes-grid .plan-card:last-child{grid-column:1/-1;max-width:340px;justify-self:center;width:100%;}
+}
+@media(max-width:560px){.planes-grid{grid-template-columns:1fr;}.planes-grid .plan-card:last-child{grid-column:auto;max-width:none;}}
+
+.plan-card{border:1.5px solid var(--acento);border-radius:16px;padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:12px;background:var(--crema);transition:transform 0.2s ease,box-shadow 0.2s ease;text-align:center;align-items:center;}
+.plan-card:hover{transform:scale(1.015);box-shadow:0 6px 24px rgba(200,169,110,0.15);}
+.plan-card.dark{background:var(--negro);}
+.plan-card hr{width:100%;border:none;border-top:1px solid var(--gris-claro);}
+.plan-card.dark hr{border-top-color:rgba(200,169,110,0.2);}
+
+.badge{font-size:10px;padding:3px 10px;border-radius:20px;display:inline-block;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+.badge-verde{background:var(--verde-claro);color:var(--verde);}
+.badge-azul{background:#dce8f5;color:#2a6496;}
+.badge-viola{background:#ede0f5;color:#6a3a8a;}
+.badge-prem{background:rgba(200,169,110,0.18);color:var(--acento);}
+
+.plan-nombre{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;line-height:1.1;}
+.plan-tagline{font-size:0.75rem;color:var(--gris);font-weight:400;font-style:italic;margin-top:-4px;}
+.plan-card.dark .plan-tagline{color:rgba(250,250,247,0.45);}
+.plan-precio{font-size:2rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;}
+.plan-precio span{font-size:0.72rem;font-weight:400;color:var(--gris);display:block;margin-top:2px;}
+.plan-card.dark .plan-precio span{color:rgba(250,250,247,0.45);}
+.plan-entrega{font-size:0.72rem;font-weight:500;color:var(--acento);letter-spacing:0.04em;}
+
+.plan-lista{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;width:100%;text-align:center;}
+.plan-lista li{font-size:0.79rem;line-height:1.45;color:var(--gris);}
+.plan-lista li::before{content:"✓ ";font-size:10px;font-weight:700;color:var(--verde);}
+.plan-card.dark .plan-lista li{color:rgba(250,250,247,0.65);}
+.plan-card.dark .plan-lista li::before{color:var(--acento);}
+.plan-card.dark .plan-nombre{color:var(--blanco);}
+.plan-card.dark .plan-precio{color:var(--blanco);}
+.plan-card.dark .plan-entrega{color:var(--acento);}
+
+/* ── WEBAPPS ── */
+.webapp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:2rem;}
+@media(max-width:600px){.webapp-grid{grid-template-columns:1fr;}}
+.webapp-desde{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;margin-bottom:0.3rem;}
+.webapp-desde span{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.75rem;color:var(--gris);font-weight:400;display:block;margin-top:2px;}
+
+.addon-card{border:1.5px solid var(--acento);border-radius:14px;padding:1.4rem 1.5rem;background:var(--crema);transition:transform 0.2s ease,box-shadow 0.2s ease;}
+.addon-card:hover{transform:scale(1.015);box-shadow:0 4px 18px rgba(200,169,110,0.13);}
+.addon-titulo{font-size:0.92rem;font-weight:600;color:var(--negro);margin-bottom:5px;}
+.addon-precio{font-size:1.1rem;font-weight:600;margin-bottom:6px;color:var(--negro);}
+.addon-precio span{font-size:0.72rem;font-weight:400;color:var(--gris);}
+.addon-texto{font-size:0.78rem;color:var(--gris);line-height:1.55;margin-bottom:8px;}
+.addon-items{list-style:none;padding:0;display:flex;flex-direction:column;gap:4px;}
+.addon-items li{font-size:0.76rem;color:var(--gris);padding-left:14px;position:relative;}
+.addon-items li::before{content:"✓";position:absolute;left:0;font-size:10px;font-weight:700;color:var(--verde);}
+.addon-ideal{font-size:0.72rem;color:var(--acento);font-weight:500;margin-top:8px;font-style:italic;}
+
+/* ── WEBAPPS HERO CARD ── */
+.webapp-hero{background:var(--negro);border:1.5px solid var(--acento);border-radius:16px;padding:2rem;grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:14px;}
+.webapp-hero-texto h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--blanco);margin-bottom:0.4rem;}
+.webapp-hero-texto h3 em{font-style:italic;color:var(--acento);}
+.webapp-hero-texto p{font-size:0.82rem;color:rgba(250,250,247,0.5);font-weight:300;max-width:420px;line-height:1.65;}
+.webapp-precio-wrap{text-align:right;flex-shrink:0;}
+.webapp-desde-label{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(250,250,247,0.4);margin-bottom:2px;}
+.webapp-desde-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--blanco);line-height:1;}
+.webapp-desde-num span{font-size:0.72rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;color:rgba(250,250,247,0.4);display:block;margin-top:2px;}
+@media(max-width:600px){.webapp-hero{flex-direction:column;}.webapp-precio-wrap{text-align:left;}}
+
+/* ── PLANES MENSUALES ── */
+.mensuales-grid{display:grid;grid-template-columns:repeat(2,minmax(0,380px));gap:14px;justify-content:center;margin-bottom:2rem;}
+@media(max-width:700px){.mensuales-grid{grid-template-columns:1fr;}}
+
+/* ── ADICIONALES ── */
+.adicionales-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:2rem;}
+@media(max-width:600px){.adicionales-grid{grid-template-columns:1fr;}}
+
+/* ── NOTA COBRO ── */
+.nota-cobro{background:var(--acento-claro);border:1.5px solid var(--acento);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;}
+.nota-cobro p{font-size:0.78rem;color:var(--gris);margin:0;line-height:1.6;}
+.nota-cobro strong{color:var(--negro);}
+
+/* ── FORMAS DE PAGO GLOBAL ── */
+.pago-global{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:2rem;}
+@media(max-width:500px){.pago-global{grid-template-columns:1fr;}}
+.pago-label{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);font-weight:500;margin-top:2rem;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.6rem;}
+.pago-label::after{content:'';flex:1;height:1px;background:var(--gris-claro);}
+
+/* ── PROPIEDAD DESTACADA ── */
+.propiedad-banner{background:var(--negro);border:2px solid var(--acento);border-radius:16px;padding:1.75rem 2rem;margin-top:2.5rem;margin-bottom:1rem;display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap;}
+.propiedad-banner-icon{font-size:2rem;flex-shrink:0;margin-top:2px;}
+.propiedad-banner-texto h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--blanco);margin-bottom:6px;}
+.propiedad-banner-texto h4 em{font-style:italic;color:var(--acento);}
+.propiedad-banner-texto p{font-size:0.8rem;color:rgba(250,250,247,0.5);font-weight:300;line-height:1.6;margin-bottom:10px;}
+.propiedad-items{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.propiedad-item{font-size:0.72rem;padding:3px 10px;border-radius:20px;background:rgba(200,169,110,0.15);color:var(--acento);font-weight:500;border:1px solid rgba(200,169,110,0.3);}
+
+/* ── ACLARACIONES ── */
+.aclaraciones{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem;}
+@media(max-width:700px){.aclaraciones{grid-template-columns:1fr;}}
+.acl-card{background:var(--crema);border:1.5px solid var(--gris-claro);border-radius:12px;padding:1.25rem;}
+.acl-card h4{font-size:0.8rem;font-weight:600;color:var(--negro);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.acl-card ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:5px;}
+.acl-card ul li{font-size:0.76rem;color:var(--gris);padding-left:14px;position:relative;}
+.acl-card ul li::before{content:"·";position:absolute;left:3px;color:var(--acento);}
+
+/* ── CTA BOTTOM ── */
+.planes-bottom-cta{margin-top:3rem;padding:2.5rem;background:var(--negro);border-radius:18px;text-align:center;}
+.planes-bottom-cta h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--blanco);margin-bottom:0.5rem;}
+.planes-bottom-cta h3 em{font-style:italic;color:var(--acento);}
+.planes-bottom-cta p{font-size:0.88rem;color:rgba(250,250,247,0.5);font-weight:300;margin-bottom:1.5rem;}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-wsp{display:inline-flex;align-items:center;gap:0.5rem;background:var(--acento);color:var(--negro);padding:0.85rem 1.75rem;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.25s;}
+.btn-wsp:hover{background:var(--blanco);transform:translateY(-2px);}
+.btn-sec{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:rgba(250,250,247,0.7);padding:0.85rem 1.75rem;border-radius:8px;font-size:0.85rem;font-weight:500;text-decoration:none;border:1.5px solid rgba(250,250,247,0.2);transition:all 0.25s;}
+.btn-sec:hover{border-color:var(--acento);color:var(--acento);transform:translateY(-2px);}
+
+/* ── FOOTER ── */
+footer{background:var(--negro);color:var(--blanco);padding:3rem 2rem;text-align:center;}
+.footer-logo{margin-bottom:1rem;}
+.footer-tagline{font-size:0.8rem;color:rgba(250,250,247,0.4);font-weight:300;margin-bottom:1.5rem;}
+.footer-links{display:flex;justify-content:center;gap:2rem;list-style:none;margin-bottom:2rem;flex-wrap:wrap;}
+.footer-links a{text-decoration:none;font-size:0.75rem;color:rgba(250,250,247,0.45);transition:color 0.2s;}
+.footer-links a:hover{color:var(--acento);}
+.footer-copy{font-size:0.72rem;color:rgba(250,250,247,0.25);font-weight:300;}
+</style>
+</head>
+<body>
+
+<!-- LINKEDIN FLOTANTE -->
+<a href="https://www.linkedin.com/in/martinromerostudio" target="_blank" class="li-float" id="li-float" aria-label="Ver perfil de LinkedIn">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#0A66C2"/>
+  </svg>
+</a>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/5492214358401?text=Hola%20Martin%2C%20vi%20tus%20planes%20y%20me%20interesa%20consultarte" target="_blank" class="wsp-float" id="wsp-float" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#25D366"/>
+    <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.406A9.954 9.954 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.049-1.107l-.29-.173-3.007.849.854-2.939-.189-.302A7.944 7.944 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" fill="#25D366"/>
+  </svg>
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <svg width="190" height="52" viewBox="0 0 220 65" xmlns="http://www.w3.org/2000/svg">
+      <line x1="8" y1="32" x2="24" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="8" cy="32" r="2" fill="#c8a96e"/>
+      <line x1="162" y1="32" x2="178" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="178" cy="32" r="2" fill="#c8a96e"/>
+      <text x="93" y="21" font-family="Cormorant Garamond, serif" font-size="11" font-weight="600" letter-spacing="5" fill="#1c1c1a" text-anchor="middle">MARTIN</text>
+      <text x="93" y="40" font-family="Cormorant Garamond, serif" font-size="22" font-weight="700" letter-spacing="2" fill="#1c1c1a" text-anchor="middle">ROMERO</text>
+      <line x1="38" y1="46" x2="148" y2="46" stroke="#c8a96e" stroke-width="0.8"/>
+      <text x="93" y="57" font-family="Plus Jakarta Sans, sans-serif" font-size="6" font-weight="300" letter-spacing="6" fill="#c8a96e" text-anchor="middle">STUDIO</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#servicios">Servicios</a></li>
+    <li><a href="index.html#proyectos">Proyectos</a></li>
+    <li><a href="planes.html" class="active">Planes</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+    <li><a href="https://wa.me/5492214358401" target="_blank" class="nav-cta">Hablemos</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="planes-hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Martin Romero Studio</div>
+    <h1 class="hero-titulo">Planes y <em>precios</em></h1>
+    <p class="hero-sub">Claros, transparentes y pensados para negocios reales. Sin sorpresas, sin tecnicismos.</p>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('desarrollo',this)">Desarrollo web</button>
+  <button class="tab-btn" onclick="showTab('mensuales',this)">Planes mensuales</button>
+  <button class="tab-btn" onclick="showTab('webapps',this)">WebApps</button>
+  <button class="tab-btn" onclick="showTab('adicionales',this)">Adicionales</button>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: DESARROLLO WEB -->
+<!-- ══════════════════════════════════════ -->
+<div class="seccion visible" id="tab-desarrollo">
+
+  <div class="section-label">Desarrollo web — pago único</div>
+  <p class="section-desc">Sitios web claros, rápidos y pensados para generar consultas reales. Sin vueltas técnicas, sin mantenimiento complicado.</p>
+
+  <div class="planes-grid">
+
+    <!-- PLAN PRESENCIA -->
+    <div class="plan-card">
+      <span class="badge badge-verde">Plan Presencia</span>
+      <p class="plan-nombre">Tu negocio online<br>en 7 días</p>
+      <p class="plan-tagline">Ideal para profesionales y servicios que necesitan empezar ya</p>
+      <p class="plan-precio">$179.000<span>pago único · archivos incluidos</span></p>
+      <p class="plan-entrega">⏱ Entrega en 7 días</p>
+      <hr>
+      <ul class="plan-lista">
+        <li>Landing page profesional</li>
+        <li>Diseño enfocado en consultas</li>
+        <li>Botón directo a WhatsApp</li>
+        <li>Formulario de contacto</li>
+        <li>Responsive (mobile-first)</li>
+        <li>SEO básico para Google</li>
+        <li>Conexión con tu dominio</li>
+        <li>Primer mes de soporte incluido</li>
+      </ul>
+    </div>
+
+    <!-- PLAN NEGOCIO -->
+    <div class="plan-card">
+      <span class="badge badge-azul">Plan Negocio</span>
+      <p class="plan-nombre">Presencia sólida<br>y profesional</p>
+      <p class="plan-tagline">Ideal para comercios o servicios que necesitan generar confianza</p>
+      <p class="plan-precio">$339.000<span>pago único · archivos incluidos</span></p>
+      <p class="plan-entrega">⏱ Entrega en 15 días</p>
+      <hr>
+      <ul class="plan-lista">
+        <li>Todo lo del Plan Presencia</li>
+        <li>Hasta 5 secciones completas</li>
+        <li>Galería de fotos o trabajos</li>
+        <li>Mapa interactivo de tu local</li>
+        <li>Conexión con Google Business</li>
+        <li>SEO local optimizado</li>
+        <li>Llamadas a la acción estratégicas</li>
+      </ul>
+    </div>
+
+    <!-- PLAN CATÁLOGO -->
+    <div class="plan-card dark">
+      <span class="badge badge-prem">Plan Catálogo</span>
+      <p class="plan-nombre">Mostrá tus productos<br>sin depender de nadie</p>
+      <p class="plan-tagline">Ideal para negocios con productos o precios que cambian seguido</p>
+      <p class="plan-precio">$549.000<span>pago único · archivos incluidos</span></p>
+      <p class="plan-entrega" style="font-size:0.7rem;color:var(--acento);opacity:0.85;">★ Incluye carga inicial de hasta 30 artículos</p>
+      <p class="plan-entrega">⏱ Entrega en 20 a 25 días</p>
+      <hr>
+      <ul class="plan-lista">
+        <li>Todo lo del Plan Negocio</li>
+        <li>Catálogo autogestionable</li>
+        <li>Edición desde Google Sheets</li>
+        <li>Sistema de categorías</li>
+        <li>Vista detallada por producto</li>
+        <li>Carga optimizada y rápida</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- PROPIEDAD TOTAL -->
+  <div class="propiedad-banner">
+    <div class="propiedad-banner-icon">🔐</div>
+    <div class="propiedad-banner-texto">
+      <h4>El sitio es <em>100% tuyo</em></h4>
+      <p>Sin dependencias, sin candados. Al terminar el proyecto recibís todos los accesos y archivos. Tu negocio, tu web, tu dominio.</p>
+      <div class="propiedad-items">
+        <span class="propiedad-item">Dominio a tu nombre</span>
+        <span class="propiedad-item">Todos los archivos incluidos</span>
+        <span class="propiedad-item">Accesos completos</span>
+        <span class="propiedad-item">Sin ataduras</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GESTIÓN DE DOMINIO -->
+  <div class="addon-card" style="margin-bottom:0;">
+    <p class="addon-titulo">🌐 Adicional — Gestión de dominio .com.ar · <strong>$22.000</strong></p>
+    <p class="addon-texto" style="margin:0;">Nos encargamos de todo el trámite en NIC.ar. El dominio queda registrado a tu nombre, con tu CUIT. Vos sos el dueño legal desde el primer momento.</p>
+  </div>
+
+  <!-- FORMAS DE PAGO -->
+  <p class="pago-label">Formas de pago</p>
+  <div class="pago-global">
+    <div class="addon-card" style="display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.5rem;">🏦</span>
+      <div><p class="addon-titulo">Transferencia bancaria</p><p class="addon-texto" style="margin:0;">10% de descuento sobre el total</p></div>
+    </div>
+    <div class="addon-card" style="display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.5rem;">💳</span>
+      <div><p class="addon-titulo">MercadoPago</p><p class="addon-texto" style="margin:0;">Pago único</p></div>
+    </div>
+  </div>
+
+  <!-- ACLARACIONES -->
+  <div class="section-label" style="margin-top:0.5rem;">Lo que no incluyen los planes</div>
+  <div style="max-width:420px;margin-bottom:2rem;">
+    <div class="acl-card">
+      <h4>🚫 No incluye</h4>
+      <ul>
+        <li>Tiendas online (e-commerce)</li>
+        <li>Sistemas de pago integrados</li>
+        <li>Paneles administrativos complejos</li>
+        <li>Bases de datos o backend</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="planes-bottom-cta">
+    <h3>¿Cuál es el plan <em>para vos?</em></h3>
+    <p>Contame tu negocio y arranquemos</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5492214358401?text=Hola%20Martin%2C%20quiero%20consultar%20por%20un%20plan%20de%20desarrollo%20web" target="_blank" class="btn-wsp">Consultar por WhatsApp</a>
+      <a href="index.html#contacto" class="btn-sec">Enviar un mensaje →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: PLANES MENSUALES -->
+<!-- ══════════════════════════════════════ -->
+<div class="seccion" id="tab-mensuales">
+
+  <div class="section-label">Planes mensuales — opcionales</div>
+  <p class="section-desc">No tenés que ocuparte de nada técnico. Elegís el nivel de soporte que necesitás.</p>
+
+  <div class="mensuales-grid">
+
+    <!-- SOPORTE WEB -->
+    <div class="plan-card" style="max-width:100%;">
+      <span class="badge badge-verde">Soporte Web</span>
+      <p class="plan-nombre">Tu sitio siempre<br>online y funcionando</p>
+      <p class="plan-tagline">No tenés que ocuparte de nada técnico</p>
+      <p class="plan-precio">$15.900<span>/ mes · suscripción automática</span></p>
+      <hr>
+      <ul class="plan-lista">
+        <li>Hosting (publicación del sitio)</li>
+        <li>Certificado de seguridad SSL</li>
+        <li>Monitoreo básico del sitio</li>
+        <li>Conexión y mantenimiento del dominio</li>
+        <li>Soporte técnico general</li>
+      </ul>
+    </div>
+
+    <!-- GESTIÓN WEB -->
+    <div class="plan-card dark" style="max-width:100%;">
+      <span class="badge badge-prem">Gestión Web</span>
+      <p class="plan-nombre">Nos ocupamos<br>del sitio por vos</p>
+      <p class="plan-tagline">Ideal si no querés tocar nada del sitio</p>
+      <p class="plan-precio">$39.900<span>/ mes · suscripción automática</span></p>
+      <hr>
+      <ul class="plan-lista">
+        <li>Todo el Plan Soporte incluido</li>
+        <li>Hasta 4 actualizaciones por mes</li>
+        <li>Cambios de texto y precios</li>
+        <li>Carga y actualización de fotos</li>
+        <li>Soporte directo por WhatsApp</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="nota-cobro">
+    <p><strong>Cobro por MercadoPago</strong> · Suscripción mensual automática · Podés cancelar cuando quieras · El dominio y todos los archivos del sitio son siempre tuyos.</p>
+  </div>
+
+  <p class="pago-label">Formas de pago</p>
+  <div class="pago-global" style="margin-top:0;grid-template-columns:1fr;max-width:380px;">
+    <div class="addon-card" style="display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.5rem;">💳</span>
+      <div><p class="addon-titulo">MercadoPago</p><p class="addon-texto" style="margin:0;">Suscripción mensual automática</p></div>
+    </div>
+  </div>
+
+  <div class="planes-bottom-cta">
+    <h3>¿Querés que nos <em>ocupemos de todo?</em></h3>
+    <p>Sumá un plan mensual a tu proyecto y despreocupate del sitio para siempre</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5492214358401?text=Hola%20Martin%2C%20me%20interesa%20un%20plan%20mensual" target="_blank" class="btn-wsp">Consultar por WhatsApp</a>
+      <a href="index.html#contacto" class="btn-sec">Enviar un mensaje →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: WEBAPPS -->
+<!-- ══════════════════════════════════════ -->
+<div class="seccion" id="tab-webapps">
+
+  <div class="section-label">WebApps simples — soluciones a medida</div>
+
+  <div class="webapp-grid">
+
+    <div class="webapp-hero">
+      <div class="webapp-hero-texto">
+        <h3>Herramientas que <em>trabajan por vos</em></h3>
+        <p>Automatizamos procesos y mejoramos la experiencia de tus clientes con soluciones interactivas simples. Sin sistemas complejos ni backend pesado.</p>
+      </div>
+      <div class="webapp-precio-wrap">
+        <p class="webapp-desde-label">Desde</p>
+        <p class="webapp-desde-num">$450.000<span>precio según complejidad</span></p>
+      </div>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">🔸 Simuladores</p>
+      <p class="addon-texto">Herramientas que calculan resultados en el momento, sin que el cliente tenga que esperar tu respuesta.</p>
+      <ul class="addon-items">
+        <li>Presupuesto automático según opciones</li>
+        <li>Calculadora de cuotas o financiación</li>
+        <li>Estimador de costos o tiempos</li>
+      </ul>
+      <p class="addon-ideal">👉 Ideal para reducir consultas repetidas</p>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">🔸 Formularios avanzados</p>
+      <p class="addon-texto">Formularios inteligentes que filtran y organizan mejor los contactos que recibís.</p>
+      <ul class="addon-items">
+        <li>Múltiples pasos con lógica dinámica</li>
+        <li>Preguntas que cambian según respuestas</li>
+        <li>Integración con mail, WhatsApp o planillas</li>
+      </ul>
+      <p class="addon-ideal">👉 Ideal para mejorar la calidad de los leads</p>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">🔸 Catálogos interactivos</p>
+      <p class="addon-texto">Versiones más dinámicas y funcionales que un catálogo tradicional en PDF o imagen.</p>
+      <ul class="addon-items">
+        <li>Filtros por categoría y búsqueda rápida</li>
+        <li>Vista detallada de cada producto</li>
+        <li>Interacciones sin recargar la página</li>
+      </ul>
+      <p class="addon-ideal">👉 Mejor experiencia para el usuario</p>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">🔸 Dashboards simples</p>
+      <p class="addon-texto">Paneles visuales para ver información clave de tu negocio en un solo lugar.</p>
+      <ul class="addon-items">
+        <li>Consultas y pedidos recibidos</li>
+        <li>Métricas básicas del sitio</li>
+        <li>Sin depender de herramientas de terceros</li>
+      </ul>
+      <p class="addon-ideal">👉 Todo visible de un vistazo</p>
+    </div>
+
+  </div>
+
+  <p class="pago-label">Formas de pago</p>
+  <div class="pago-global" style="margin-top:0;margin-bottom:2rem;">
+    <div class="addon-card" style="display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.5rem;">🏦</span>
+      <div><p class="addon-titulo">Transferencia bancaria</p><p class="addon-texto" style="margin:0;">10% de descuento sobre el total</p></div>
+    </div>
+    <div class="addon-card" style="display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.5rem;">💳</span>
+      <div><p class="addon-titulo">MercadoPago</p><p class="addon-texto" style="margin:0;">Pago único</p></div>
+    </div>
+  </div>
+
+  <div class="planes-bottom-cta">
+    <h3>¿Tenés una <em>idea en mente?</em></h3>
+    <p>Contame qué proceso querés automatizar y te armo una propuesta a medida</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5492214358401?text=Hola%20Martin%2C%20quiero%20consultar%20por%20una%20webapp" target="_blank" class="btn-wsp">Consultar por WhatsApp</a>
+      <a href="index.html#contacto" class="btn-sec">Enviar un mensaje →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: ADICIONALES -->
+<!-- ══════════════════════════════════════ -->
+<div class="seccion" id="tab-adicionales">
+
+  <div class="section-label">Adicionales — personalizá tu proyecto</div>
+  <p class="section-desc">Sumá lo que tu proyecto necesita. Cada adicional se cotiza sobre cualquiera de los planes de desarrollo.</p>
+
+  <div class="adicionales-grid">
+
+    <div class="addon-card">
+      <p class="addon-titulo">🌐 Gestión de dominio .com.ar</p>
+      <p class="addon-precio">$22.000</p>
+      <p class="addon-texto">Nos encargamos de todo el trámite en NIC.ar. El dominio queda registrado a tu nombre, con tu CUIT. Vos sos el dueño legal desde el primer momento.</p>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">🌍 Sitio en dos idiomas</p>
+      <p class="addon-precio">$85.000</p>
+      <p class="addon-texto">Versión completa del sitio en inglés con botón de cambio de idioma. Ideal para profesionales o negocios con clientes internacionales.</p>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">📄 Sección adicional</p>
+      <p class="addon-precio">$35.000</p>
+      <p class="addon-texto">Sumamos una nueva página o sección a tu sitio ya terminado. Mismo diseño, misma identidad, sin romper nada.</p>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">⚡ Entrega express</p>
+      <p class="addon-precio">$75.000</p>
+      <p class="addon-texto">Desarrollo prioritario en 48 a 72 horas. Cuando no podés esperar, lo hacemos primero.</p>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">✍️ Redacción de textos</p>
+      <p class="addon-precio">$45.000</p>
+      <p class="addon-texto">Creamos los textos de tu web, claros y orientados a convertir visitas en consultas.</p>
+      <ul class="addon-items">
+        <li>Sección de inicio</li>
+        <li>Descripción de servicios</li>
+        <li>Llamadas a la acción</li>
+      </ul>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">📍 Optimización Perfil de Google</p>
+      <p class="addon-precio">$65.000</p>
+      <p class="addon-texto">Configuramos y optimizamos tu perfil de Google Business para que aparezcas mejor en búsquedas locales.</p>
+      <ul class="addon-items">
+        <li>Configuración completa del perfil</li>
+        <li>Categorías y servicios actualizados</li>
+        <li>Datos de contacto y enlaces a tu web</li>
+      </ul>
+    </div>
+
+    <div class="addon-card">
+      <p class="addon-titulo">⚡ Sección interactiva</p>
+      <p class="addon-precio">Desde $45.000 <span>· según complejidad</span></p>
+      <p class="addon-texto">Sumamos una herramienta interactiva a tu sitio que responde en el momento, sin que el cliente tenga que esperar.</p>
+      <ul class="addon-items">
+        <li>Calculadora o cotizador automático</li>
+        <li>Menú con filtros dinámicos</li>
+        <li>FAQ interactivo</li>
+        <li>Precio según funcionalidad requerida</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- FORMAS DE PAGO -->
+  <p class="pago-label">Formas de pago</p>
+  <div class="pago-global" style="margin-top:0;margin-bottom:2rem;">
+    <div class="addon-card" style="display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.5rem;">🏦</span>
+      <div><p class="addon-titulo">Transferencia bancaria</p><p class="addon-texto" style="margin:0;">10% de descuento sobre el total</p></div>
+    </div>
+    <div class="addon-card" style="display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.5rem;">💳</span>
+      <div><p class="addon-titulo">MercadoPago</p><p class="addon-texto" style="margin:0;">Pago único</p></div>
+    </div>
+  </div>
+
+  <div class="planes-bottom-cta">
+    <h3>¿Querés <em>arrancar?</em></h3>
+    <p>Un mensaje y en menos de 24 horas te respondo con una propuesta clara</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5492214358401?text=Hola%20Martin%2C%20quiero%20arrancar%20con%20mi%20sitio%20web" target="_blank" class="btn-wsp">Consultar por WhatsApp</a>
+      <a href="index.html#contacto" class="btn-sec">Enviar un mensaje →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg width="160" height="52" viewBox="0 0 220 65" xmlns="http://www.w3.org/2000/svg">
+      <line x1="8" y1="32" x2="24" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="8" cy="32" r="2" fill="#c8a96e"/>
+      <line x1="162" y1="32" x2="178" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="178" cy="32" r="2" fill="#c8a96e"/>
+      <text x="93" y="21" font-family="Cormorant Garamond, serif" font-size="11" font-weight="600" letter-spacing="5" fill="#fafaf7" text-anchor="middle">MARTIN</text>
+      <text x="93" y="40" font-family="Cormorant Garamond, serif" font-size="22" font-weight="700" letter-spacing="2" fill="#fafaf7" text-anchor="middle">ROMERO</text>
+      <line x1="38" y1="46" x2="148" y2="46" stroke="#c8a96e" stroke-width="0.8"/>
+      <text x="93" y="57" font-family="Plus Jakarta Sans, sans-serif" font-size="6" font-weight="300" letter-spacing="6" fill="#c8a96e" text-anchor="middle">STUDIO</text>
+    </svg>
+  </div>
+  <p class="footer-tagline">Presencia digital para negocios reales · La Plata, Buenos Aires</p>
+  <ul class="footer-links">
+    <li><a href="index.html#servicios">Servicios</a></li>
+    <li><a href="index.html#proyectos">Proyectos</a></li>
+    <li><a href="planes.html">Planes</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+    <li><a href="https://wa.me/5492214358401" target="_blank">WhatsApp</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Martin Romero Studio · martinromero.com.ar</p>
+</footer>
+
+<script>
+  // NAV SCROLL
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // TABS
+  function showTab(tab, btn) {
+    document.querySelectorAll('.seccion').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('visible');
+    if (btn) {
+      btn.classList.add('active');
+    } else {
+      document.querySelector(`.tab-btn[onclick*="'${tab}'"]`)?.classList.add('active');
+    }
+    window.scrollTo({ top: document.querySelector('.tabs-nav').offsetTop - 80, behavior: 'smooth' });
+  }
+
+  // ABRIR TAB POR URL (?tab=mensuales, ?tab=adicionales, etc.)
+  const urlTab = new URLSearchParams(window.location.search).get('tab');
+  if (urlTab && document.getElementById('tab-' + urlTab)) {
+    document.querySelectorAll('.seccion').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + urlTab).classList.add('visible');
+    document.querySelector(`.tab-btn[onclick*="'${urlTab}'"]`)?.classList.add('active');
+    setTimeout(() => {
+      document.querySelector('.tabs-nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  // HAMBURGER
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const isOpen = links.classList.contains('mobile-open');
+    if (isOpen) { closeMobileMenu(); }
+    else {
+      links.classList.add('mobile-open');
+      links.style.display = 'flex'; links.style.flexDirection = 'column';
+      links.style.position = 'fixed'; links.style.top = '60px';
+      links.style.left = '0'; links.style.right = '0';
+      links.style.background = 'rgba(240,228,204,0.98)';
+      links.style.padding = '1.5rem 2rem';
+      links.style.borderBottom = '1px solid #e8e4dc';
+      links.style.gap = '1.25rem';
+      links.style.backdropFilter = 'blur(10px)';
+      links.style.zIndex = '99';
+    }
+  }
+  function closeMobileMenu() {
+    const links = document.querySelector('.nav-links');
+    links.classList.remove('mobile-open');
+    links.style.display = 'none';
+  }
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => { if (window.innerWidth <= 680) closeMobileMenu(); });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Gracias! · Martin Romero Studio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='56' height='56' rx='10' fill='%23f0e4cc'/%3E%3Ctext x='28' y='36' font-family='Georgia%2Cserif' font-size='22' font-weight='700' letter-spacing='1' fill='%231c1c1a' text-anchor='middle'%3EMR%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro: #1c1c1a;
+    --acento: #c8a96e;
+    --crema: #f7f2ea;
+    --gris: #6b6b68;
+    --verde: #4a7c59;
+    --verde-claro: #d4e8da;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--crema);
+    color: var(--negro);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Fondo sutil */
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(200,169,110,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(74,124,89,0.07) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    padding: 3.5rem 2.5rem;
+    background: white;
+    border-radius: 24px;
+    border: 1.5px solid rgba(200,169,110,0.3);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+  }
+
+  /* Logo */
+  .logo { margin-bottom: 2rem; }
+
+  /* Ícono check */
+  .check-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--verde-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.75rem;
+    animation: popIn 0.5s 0.2s ease both;
+  }
+  .check-circle svg { width: 32px; height: 32px; }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .titulo em { font-style: italic; color: var(--acento); }
+
+  .subtitulo {
+    font-size: 0.95rem;
+    color: var(--gris);
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  /* Barra de progreso */
+  .progress-wrap {
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+  .progress-label {
+    font-size: 0.75rem;
+    color: var(--gris);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+  .progress-bar-bg {
+    height: 4px;
+    background: #ede5d8;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--acento);
+    border-radius: 99px;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* Botón */
+  .btn-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--negro);
+    color: white;
+    padding: 0.8rem 1.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s;
+    animation: fadeUp 0.6s 0.5s ease both;
+    border: none;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .btn-volver:hover { background: var(--acento); color: var(--negro); transform: translateY(-2px); }
+
+  /* Ornamento */
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 0.5rem;
+  }
+  .orn-line { width: 20px; height: 1px; background: var(--acento); }
+  .orn-dot  { width: 4px; height: 4px; border-radius: 50%; background: var(--acento); }
+
+  .firma {
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: rgba(107,107,104,0.5);
+    font-style: italic;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="logo">
+    <svg width="160" height="44" viewBox="0 0 220 65" xmlns="http://www.w3.org/2000/svg">
+      <line x1="18" y1="32" x2="34" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="18" cy="32" r="2" fill="#c8a96e"/>
+      <line x1="186" y1="32" x2="202" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="202" cy="32" r="2" fill="#c8a96e"/>
+      <text x="110" y="21" font-family="Cormorant Garamond, serif" font-size="11" font-weight="600" letter-spacing="5" fill="#1c1c1a" text-anchor="middle">MARTIN</text>
+      <text x="110" y="40" font-family="Cormorant Garamond, serif" font-size="22" font-weight="700" letter-spacing="2" fill="#1c1c1a" text-anchor="middle">ROMERO</text>
+      <line x1="50" y1="46" x2="170" y2="46" stroke="#c8a96e" stroke-width="0.8"/>
+      <text x="110" y="57" font-family="Plus Jakarta Sans, sans-serif" font-size="6" font-weight="300" letter-spacing="6" fill="#c8a96e" text-anchor="middle">STUDIO</text>
+    </svg>
+  </div>
+
+  <div class="check-circle">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 16l7 7 13-13" stroke="#4a7c59" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="ornament">
+    <div class="orn-line"></div>
+    <div class="orn-dot"></div>
+    <div class="orn-line"></div>
+  </div>
+
+  <h1 class="titulo">¡Gracias por<br>confiar en <em>nosotros</em>!</h1>
+
+  <p class="subtitulo">
+    Tu pago fue recibido con éxito.<br>
+    Me estaré poniendo en contacto a la brevedad para coordinar los próximos pasos.
+  </p>
+
+  <div class="progress-wrap">
+    <p class="progress-label">Volviendo al sitio en <span id="seg">20</span> segundos...</p>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="barra"></div>
+    </div>
+  </div>
+
+  <button class="btn-volver" onclick="irAlInicio()">Volver al sitio ahora →</button>
+
+  <p class="firma">— Martin Romero Studio · martinromero.com.ar</p>
+
+</div>
+
+<script>
+  const TOTAL = 20;
+  let remaining = TOTAL;
+  const segEl = document.getElementById('seg');
+  const barra = document.getElementById('barra');
+
+  function irAlInicio() {
+    window.location.href = 'index.html';
+  }
+
+  const interval = setInterval(() => {
+    remaining -= 0.1;
+    const pct = ((TOTAL - remaining) / TOTAL) * 100;
+    barra.style.width = pct + '%';
+    segEl.textContent = Math.ceil(remaining);
+    if (remaining <= 0) {
+      clearInterval(interval);
+      irAlInicio();
+    }
+  }, 100);
+</script>
+
+</body>
+</html>

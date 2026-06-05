@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martin Romero Studio · Diseño web para negocios reales</title>
+<meta name="description" content="Diseño web para negocios locales y profesionales independientes. Landing pages y sitios simples, sin tecnicismos, con resultados. La Plata, Buenos Aires.">
+<meta name="author" content="Martin Romero Studio">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://martinromero.com.ar">
+<meta property="og:title" content="Martin Romero Studio · Diseño web para negocios reales">
+<meta property="og:description" content="Diseño web para negocios locales y profesionales independientes. Landing pages y sitios simples, sin tecnicismos, con resultados. La Plata, Buenos Aires.">
+<meta property="og:image" content="https://martinromero.com.ar/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_AR">
+<meta property="og:site_name" content="Martin Romero Studio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Martin Romero Studio · Diseño web para negocios reales">
+<meta name="twitter:description" content="Diseño web para negocios locales y profesionales independientes. La Plata, Buenos Aires.">
+<meta name="twitter:image" content="https://martinromero.com.ar/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='56' height='56' rx='10' fill='%23f0e4cc'/%3E%3Ctext x='28' y='36' font-family='Georgia%2Cserif' font-size='22' font-weight='700' letter-spacing='1' fill='%231c1c1a' text-anchor='middle'%3EMR%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro:#1c1c1a; --blanco:#fafaf7; --acento:#c8a96e;
+    --acento-claro:#f0e4cc; --arena:#ede5d8; --crema:#f7f2ea;
+    --verde:#4a7c59; --verde-claro:#d4e8da;
+    --gris:#6b6b68; --gris-claro:#e8e4dc;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--negro);line-height:1.6;overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(240,228,204,0.97);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--gris-claro);transition:box-shadow 0.4s;}
+  nav.scrolled{box-shadow:0 2px 12px rgba(0,0,0,0.08);}
+  .nav-logo svg{display:block;}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{text-decoration:none;font-size:0.8rem;font-weight:500;color:var(--gris);letter-spacing:0.05em;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--negro);}
+  .nav-cta{background:var(--negro);color:var(--blanco)!important;padding:0.45rem 1.1rem;border-radius:6px;font-size:0.78rem!important;transition:background 0.2s!important;}
+  .nav-cta:hover{background:var(--acento)!important;color:var(--negro)!important;}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+  .hamburger span{display:block;width:22px;height:1.5px;background:var(--negro);transition:all 0.3s;}
+  @media(max-width:680px){.nav-links{display:none;}.hamburger{display:flex;}nav{padding:1rem 1.25rem;}}
+
+  /* WHATSAPP FLOTANTE */
+  .wsp-float{position:fixed;bottom:2rem;right:2rem;z-index:200;width:46px;height:46px;border-radius:50%;background:var(--negro);border:1.5px solid var(--acento);display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:translateY(10px);transition:opacity 0.4s ease,transform 0.4s ease,background 0.2s,box-shadow 0.2s;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
+  .wsp-float.visible{opacity:0.7;transform:translateY(0);}
+  .wsp-float:hover{opacity:1!important;background:#1a3520;box-shadow:0 4px 18px rgba(0,0,0,0.2);}
+  .wsp-float svg{width:22px;height:22px;}
+
+  /* LINKEDIN FLOTANTE */
+  .li-float{position:fixed;bottom:5.5rem;right:2rem;z-index:200;width:46px;height:46px;border-radius:50%;background:var(--negro);border:1.5px solid var(--acento);display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:translateY(10px);transition:opacity 0.4s ease,transform 0.4s ease,background 0.2s,box-shadow 0.2s;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
+  .li-float.visible{opacity:0.7;transform:translateY(0);}
+  .li-float:hover{opacity:1!important;background:#0a4d7a;box-shadow:0 4px 18px rgba(0,0,0,0.2);}
+  .li-float svg{width:20px;height:20px;}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:8rem 2rem 5rem;position:relative;overflow:hidden;background:var(--crema);}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 90% 10%,rgba(200,169,110,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 70% at 0% 90%,rgba(74,124,89,0.07) 0%,transparent 55%);pointer-events:none;}
+  .hero::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;opacity:0.4;}
+  .hero-inner{max-width:900px;margin:0 auto;width:100%;position:relative;z-index:1;}
+  .hero-eyebrow{display:flex;align-items:center;gap:0.75rem;font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--acento);font-weight:600;margin-bottom:1.5rem;animation:fadeUp 0.8s 0.1s ease both;}
+  .hero-eyebrow::before{content:'';display:inline-block;width:30px;height:1px;background:var(--acento);}
+  .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1.0;margin-bottom:1.5rem;animation:fadeUp 0.8s 0.2s ease both;}
+  .hero-title em{font-style:italic;color:var(--acento);}
+  .hero-sub{font-size:clamp(0.95rem,2vw,1.1rem);color:var(--gris);font-weight:300;max-width:500px;margin-bottom:2.5rem;line-height:1.7;animation:fadeUp 0.8s 0.3s ease both;}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp 0.8s 0.4s ease both;}
+  .btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:var(--negro);color:var(--blanco);padding:0.85rem 1.75rem;border-radius:8px;font-size:0.85rem;font-weight:500;text-decoration:none;transition:all 0.25s;letter-spacing:0.03em;}
+  .btn-primary:hover{background:var(--acento);color:var(--negro);transform:translateY(-2px);}
+  .btn-secondary{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:var(--negro);padding:0.85rem 1.75rem;border-radius:8px;font-size:0.85rem;font-weight:500;text-decoration:none;border:1.5px solid var(--gris-claro);transition:all 0.25s;}
+  .btn-secondary:hover{border-color:var(--acento);color:var(--acento);transform:translateY(-2px);}
+
+  /* SECCIONES */
+  section{padding:6rem 2rem;}
+  .section-inner{max-width:900px;margin:0 auto;}
+  .section-eyebrow{display:flex;align-items:center;gap:0.6rem;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--acento);font-weight:600;margin-bottom:0.75rem;}
+  .section-eyebrow::before{content:'';display:inline-block;width:18px;height:1px;background:var(--acento);}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.15;margin-bottom:0.75rem;}
+  .section-title em{font-style:italic;color:var(--acento);}
+  .section-intro{color:var(--gris);font-size:0.95rem;font-weight:300;max-width:480px;margin-bottom:3rem;line-height:1.7;}
+  hr.divider{border:none;border-top:1px solid var(--gris-claro);max-width:900px;margin:0 auto;}
+
+  /* SERVICIOS */
+  #servicios{background:var(--crema);}
+  .servicios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;}
+  .servicio-card{background:white;border:1.5px solid var(--gris-claro);border-radius:16px;padding:1.75rem;transition:all 0.25s;position:relative;overflow:hidden;}
+  .servicio-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--acento),var(--verde));transform:scaleX(0);transition:transform 0.3s ease;}
+  .servicio-card:hover{border-color:var(--acento);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.07);}
+  .servicio-card:hover::before{transform:scaleX(1);}
+  .servicio-icono{font-size:1.6rem;margin-bottom:1rem;}
+  .servicio-card h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;margin-bottom:0.5rem;}
+  .servicio-card p{font-size:0.82rem;color:var(--gris);font-weight:300;line-height:1.6;margin-bottom:1rem;}
+  .servicio-items{display:flex;flex-direction:column;gap:0.3rem;}
+  .servicio-item{font-size:0.76rem;color:var(--verde);font-weight:500;display:flex;align-items:center;gap:0.4rem;}
+  .servicio-item::before{content:'✓';font-size:0.68rem;}
+  .servicio-plan-link{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.72rem;font-weight:600;color:var(--acento);text-decoration:none;margin-top:1rem;border-bottom:1px solid rgba(200,169,110,0.3);padding-bottom:1px;transition:border-color 0.2s,color 0.2s;letter-spacing:0.02em;}
+  .servicio-plan-link:hover{color:var(--negro);border-bottom-color:var(--negro);}
+  .servicio-plan-link::after{content:' →';}
+  .servicio-cotizacion{display:block;font-size:0.72rem;font-weight:400;color:var(--gris);font-style:italic;margin-top:1rem;}
+
+  /* CTA PLANES */
+  .planes-cta{margin-top:2.5rem;padding:2rem;background:var(--negro);border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;}
+  .planes-cta-texto h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--blanco);margin-bottom:0.25rem;}
+  .planes-cta-texto p{font-size:0.82rem;color:rgba(250,250,247,0.5);font-weight:300;}
+  .btn-planes{display:inline-flex;align-items:center;gap:0.5rem;background:var(--acento);color:var(--negro);padding:0.8rem 1.5rem;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.25s;white-space:nowrap;}
+  .btn-planes:hover{background:var(--blanco);transform:translateY(-2px);}
+
+  /* PROYECTOS */
+  #proyectos{background:var(--arena);}
+  .proyectos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:1.5rem;}
+  @media(max-width:500px){.proyectos-grid{grid-template-columns:1fr;}}
+  .proyecto-card{background:white;border-radius:18px;overflow:hidden;border:1.5px solid var(--gris-claro);transition:all 0.25s;}
+  .proyecto-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.09);border-color:var(--acento);}
+  .proyecto-preview{height:200px;background:var(--negro);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+  .preview-sg{background:linear-gradient(135deg,#f5e6f0 0%,#fce4f0 50%,#e8d5eb 100%);}
+  .preview-sg-inner{text-align:center;font-family:'Cormorant Garamond',serif;}
+  .preview-sg-inner .pname{font-size:1.4rem;font-weight:700;letter-spacing:0.05em;color:#7a3a5e;}
+  .preview-sg-inner .ptag{font-size:0.7rem;letter-spacing:0.2em;opacity:0.55;margin-top:0.3rem;text-transform:uppercase;color:#7a3a5e;}
+  .preview-sg-badge{position:absolute;top:10px;right:10px;background:rgba(122,58,94,0.12);border:1px solid rgba(122,58,94,0.25);color:#7a3a5e;font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.6rem;border-radius:20px;}
+
+  .preview-c{background:linear-gradient(135deg,#1a2e1e 0%,#2d4a35 50%,#0d1f10 100%);}
+  .preview-c-inner{text-align:center;color:#d4e8da;font-family:'Cormorant Garamond',serif;}
+  .preview-c-inner .pname{font-size:1.4rem;font-weight:700;letter-spacing:0.05em;}
+  .preview-c-inner .ptag{font-size:0.7rem;letter-spacing:0.2em;opacity:0.5;margin-top:0.3rem;text-transform:uppercase;}
+  .preview-c-badge{position:absolute;top:10px;right:10px;background:rgba(212,232,218,0.12);border:1px solid rgba(212,232,218,0.25);color:#d4e8da;font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.6rem;border-radius:20px;}
+  .proyecto-info{padding:1.4rem 1.5rem;}
+  .proyecto-tags{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.75rem;}
+  .proyecto-tag{font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.55rem;border-radius:20px;background:var(--acento-claro);color:var(--acento);}
+  .proyecto-tag.verde{background:var(--verde-claro);color:var(--verde);}
+  .proyecto-info h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin-bottom:0.35rem;}
+  .proyecto-info p{font-size:0.8rem;color:var(--gris);font-weight:300;line-height:1.6;margin-bottom:1rem;}
+  .proyecto-link{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.78rem;font-weight:600;color:var(--negro);text-decoration:none;border-bottom:1px solid var(--acento);padding-bottom:1px;transition:color 0.2s;}
+  .proyecto-link:hover{color:var(--acento);}
+  .proyecto-link::after{content:'→';}
+
+  /* CONTACTO */
+  #contacto{background:var(--crema);}
+  .contacto-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;align-items:start;}
+  @media(max-width:680px){.contacto-wrap{grid-template-columns:1fr;gap:2rem;}}
+  .contacto-info h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:700;line-height:1.15;margin-bottom:0.75rem;}
+  .contacto-info h2 em{font-style:italic;color:var(--acento);}
+  .contacto-info p{font-size:0.9rem;color:var(--gris);font-weight:300;line-height:1.7;margin-bottom:2rem;}
+  .contacto-canales{display:flex;flex-direction:column;gap:0.75rem;}
+  .canal{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:white;border:1.5px solid var(--gris-claro);border-radius:12px;text-decoration:none;color:var(--negro);transition:all 0.2s;}
+  .canal:hover{border-color:var(--acento);transform:translateX(4px);}
+  .canal-icono{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+  .canal-icono.wsp{background:#e8f5e9;}
+  .canal-icono.mail{background:var(--acento-claro);}
+  .canal-texto h4{font-size:0.82rem;font-weight:600;margin-bottom:0.1rem;}
+  .canal-texto p{font-size:0.75rem;color:var(--gris);font-weight:300;}
+  .contacto-form{background:white;border:1.5px solid var(--gris-claro);border-radius:18px;padding:2rem;}
+  .form-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin-bottom:1.5rem;color:var(--negro);}
+  .form-group{margin-bottom:1.1rem;}
+  .form-group label{display:block;font-size:0.75rem;font-weight:600;color:var(--gris);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.4rem;}
+  .form-group input,.form-group textarea,.form-group select{width:100%;padding:0.75rem 1rem;border:1.5px solid var(--gris-claro);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.85rem;font-weight:300;color:var(--negro);background:var(--crema);transition:border-color 0.2s;outline:none;}
+  .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--acento);background:white;}
+  .form-group textarea{resize:vertical;min-height:100px;}
+  .form-submit{width:100%;padding:0.9rem;background:var(--negro);color:var(--blanco);border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.25s;letter-spacing:0.03em;margin-top:0.5rem;}
+  .form-submit:hover{background:var(--acento);color:var(--negro);}
+  .form-confirmacion{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.5rem;gap:1rem;min-height:300px;}
+  .form-confirmacion.visible{display:flex;}
+  .confirmacion-icono{width:60px;height:60px;border-radius:50%;background:var(--verde-claro);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:0.5rem;}
+  .confirmacion-titulo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--negro);line-height:1.2;}
+  .confirmacion-texto{font-size:0.88rem;color:var(--gris);font-weight:300;line-height:1.6;max-width:320px;}
+  .confirmacion-btn{margin-top:0.5rem;padding:0.7rem 1.5rem;background:transparent;color:var(--negro);border:1.5px solid var(--gris-claro);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
+  .confirmacion-btn:hover{border-color:var(--acento);color:var(--acento);}
+
+  /* FOOTER */
+  footer{background:var(--negro);color:var(--blanco);padding:3rem 2rem;text-align:center;}
+  .footer-logo{margin-bottom:1rem;}
+  .footer-tagline{font-size:0.8rem;color:rgba(250,250,247,0.4);font-weight:300;margin-bottom:1.5rem;}
+  .footer-links{display:flex;justify-content:center;gap:2rem;list-style:none;margin-bottom:2rem;}
+  .footer-links a{text-decoration:none;font-size:0.75rem;color:rgba(250,250,247,0.45);transition:color 0.2s;}
+  .footer-links a:hover{color:var(--acento);}
+  .footer-copy{font-size:0.72rem;color:rgba(250,250,247,0.25);font-weight:300;}
+
+  /* ANIMACIONES */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  .reveal{opacity:1;transform:translateY(0);transition:opacity 0.7s ease,transform 0.7s ease;}
+  .js-ready .reveal{opacity:0;transform:translateY(20px);}
+  .js-ready .reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/5492214358401?text=Hola%20Martin%2C%20vi%20tu%20portfolio%20y%20me%20interesa%20hablar%20sobre%20mi%20proyecto" target="_blank" class="wsp-float" id="wsp-float" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#25D366"/>
+    <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.406A9.954 9.954 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.049-1.107l-.29-.173-3.007.849.854-2.939-.189-.302A7.944 7.944 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" fill="#25D366"/>
+  </svg>
+</a>
+
+<!-- LINKEDIN FLOTANTE -->
+<a href="https://www.linkedin.com/in/martinromerostudio" target="_blank" class="li-float" id="li-float" aria-label="Ver perfil de LinkedIn">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#0A66C2"/>
+  </svg>
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#inicio" class="nav-logo">
+    <svg width="190" height="52" viewBox="0 0 220 65" xmlns="http://www.w3.org/2000/svg">
+      <line x1="8" y1="32" x2="24" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="8" cy="32" r="2" fill="#c8a96e"/>
+      <line x1="162" y1="32" x2="178" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="178" cy="32" r="2" fill="#c8a96e"/>
+      <text x="93" y="21" font-family="Cormorant Garamond, serif" font-size="11" font-weight="600" letter-spacing="5" fill="#1c1c1a" text-anchor="middle">MARTIN</text>
+      <text x="93" y="40" font-family="Cormorant Garamond, serif" font-size="22" font-weight="700" letter-spacing="2" fill="#1c1c1a" text-anchor="middle">ROMERO</text>
+      <line x1="38" y1="46" x2="148" y2="46" stroke="#c8a96e" stroke-width="0.8"/>
+      <text x="93" y="57" font-family="Plus Jakarta Sans, sans-serif" font-size="6" font-weight="300" letter-spacing="6" fill="#c8a96e" text-anchor="middle">STUDIO</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="planes.html">Planes</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="https://wa.me/5492214358401" target="_blank" class="nav-cta">Hablemos</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Diseño web · La Plata, Buenos Aires</div>
+    <h1 class="hero-title">
+      Tu negocio merece<br>
+      una <em>presencia digital</em><br>
+      que trabaje por vos
+    </h1>
+    <p class="hero-sub">
+      Creo sitios web y landing pages para negocios locales y profesionales independientes. Sin tecnicismos, con resultados.
+    </p>
+    <div class="hero-actions">
+      <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+      <a href="#contacto" class="btn-secondary">Contactame</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Servicios</div>
+    <h2 class="section-title reveal">Lo que puedo<br>hacer por tu negocio</h2>
+    <p class="section-intro reveal">Sitios simples, efectivos y bien diseñados. Sin complicaciones innecesarias.</p>
+    <div class="servicios-grid">
+      <div class="servicio-card reveal">
+        <div class="servicio-icono">🌐</div>
+        <h3>Landing Page</h3>
+        <p>Una página diseñada para convertir visitantes en clientes. Mobile-first, rápida y con tu identidad.</p>
+        <div class="servicio-items">
+          <span class="servicio-item">Diseño personalizado</span>
+          <span class="servicio-item">Mobile-first y responsive</span>
+          <span class="servicio-item">Formulario de contacto</span>
+          <span class="servicio-item">Botón WhatsApp integrado</span>
+        </div>
+        <a href="planes.html?tab=desarrollo" class="servicio-plan-link">Plan Presencia desde $179.000</a>
+      </div>
+      <div class="servicio-card reveal">
+        <div class="servicio-icono">🏪</div>
+        <h3>Sitio institucional</h3>
+        <p>Presencia digital completa para tu negocio o estudio profesional. Hasta 5 secciones con todo lo que necesitás en un solo lugar.</p>
+        <div class="servicio-items">
+          <span class="servicio-item">Hasta 5 secciones</span>
+          <span class="servicio-item">Galería de fotos</span>
+          <span class="servicio-item">Google Maps integrado</span>
+          <span class="servicio-item">SEO básico incluido</span>
+        </div>
+        <a href="planes.html?tab=desarrollo" class="servicio-plan-link">Plan Negocio desde $339.000</a>
+      </div>
+      <div class="servicio-card reveal">
+        <div class="servicio-icono">🗂️</div>
+        <h3>Catálogo web</h3>
+        <p>Mostrá tus productos y actualizalos vos mismo desde una planilla simple. Sin depender de nadie para cambiar precios o agregar artículos.</p>
+        <div class="servicio-items">
+          <span class="servicio-item">Catálogo autogestionable</span>
+          <span class="servicio-item">Edición desde Google Sheets</span>
+          <span class="servicio-item">Sistema de categorías</span>
+          <span class="servicio-item">Vista detallada por producto</span>
+        </div>
+        <a href="planes.html?tab=desarrollo" class="servicio-plan-link">Plan Catálogo desde $549.000</a>
+      </div>
+      <div class="servicio-card reveal">
+        <div class="servicio-icono">✏️</div>
+        <h3>Rediseño web</h3>
+        <p>Transformamos tu sitio actual en algo moderno, rápido y que refleje la calidad real de tu negocio.</p>
+        <div class="servicio-items">
+          <span class="servicio-item">Análisis del sitio actual</span>
+          <span class="servicio-item">Propuestas de diseño</span>
+          <span class="servicio-item">Migración de contenido</span>
+          <span class="servicio-item">Optimización de velocidad</span>
+        </div>
+        <span class="servicio-cotizacion">Cotización a medida · consultá sin compromiso</span>
+      </div>
+      <div class="servicio-card reveal">
+        <div class="servicio-icono">⚙️</div>
+        <h3>Mantenimiento</h3>
+        <p>Tu sitio siempre actualizado y funcionando. Nos ocupamos de los cambios por vos, sin que tengas que tocar nada.</p>
+        <div class="servicio-items">
+          <span class="servicio-item">Actualizaciones de contenido</span>
+          <span class="servicio-item">Soporte por WhatsApp</span>
+          <span class="servicio-item">Cambios y ajustes</span>
+          <span class="servicio-item">Reportes de visitas</span>
+        </div>
+        <a href="planes.html?tab=mensuales" class="servicio-plan-link">Plan Gestión Web desde $39.900/mes</a>
+      </div>
+      <div class="servicio-card reveal">
+        <div class="servicio-icono">📡</div>
+        <h3>Hosting y soporte</h3>
+        <p>Tu sitio publicado y funcionando desde la entrega. Dominio configurado, SSL activo, sin que tengas que ocuparte de nada técnico.</p>
+        <div class="servicio-items">
+          <span class="servicio-item">Dominio personalizado configurado</span>
+          <span class="servicio-item">SSL y seguridad activa</span>
+          <span class="servicio-item">Configuración completa</span>
+          <span class="servicio-item">Sin tecnicismos</span>
+        </div>
+        <a href="planes.html?tab=mensuales" class="servicio-plan-link">Plan Soporte Web desde $15.900/mes</a>
+      </div>
+      <div class="servicio-card reveal">
+        <div class="servicio-icono">🔗</div>
+        <h3>Gestión de dominio</h3>
+        <p>Registramos tu dominio .com.ar a tu nombre, con tu CUIT. Vos sos el dueño legal desde el primer momento.</p>
+        <div class="servicio-items">
+          <span class="servicio-item">Dominio a nombre del cliente</span>
+          <span class="servicio-item">Renovación gestionada</span>
+          <span class="servicio-item">Sin intermediarios</span>
+        </div>
+        <a href="planes.html?tab=adicionales" class="servicio-plan-link">Adicional desde $22.000</a>
+      </div>
+    </div>
+    <div class="planes-cta reveal">
+      <div class="planes-cta-texto">
+        <h3>¿Cuánto cuesta?</h3>
+        <p>Planes claros y transparentes para cada etapa de tu negocio</p>
+      </div>
+      <a href="planes.html" class="btn-planes">Ver planes y precios →</a>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Proyectos</div>
+    <h2 class="section-title reveal">Trabajos <em>realizados</em></h2>
+    <p class="section-intro reveal">Cada proyecto es una solución pensada para el negocio real del cliente.</p>
+    <div class="proyectos-grid">
+      <div class="proyecto-card reveal">
+        <div class="proyecto-preview preview-c">
+          <div class="preview-c-inner">
+            <div class="pname">Green Garden</div>
+            <div class="ptag">Restaurante · La Plata</div>
+          </div>
+          <span class="preview-c-badge">✓ Publicado</span>
+        </div>
+        <div class="proyecto-info">
+          <div class="proyecto-tags">
+            <span class="proyecto-tag">Sitio institucional</span>
+            <span class="proyecto-tag verde">Restaurante</span>
+          </div>
+          <h3>Green Garden</h3>
+          <p>Rediseño completo para restaurante familiar en La Plata. Diseño fresco y contemporáneo, menú accesible, sección Playroom y optimizado para mobile.</p>
+          <a href="https://www.greengarden.com.ar" target="_blank" class="proyecto-link">Ver sitio</a>
+        </div>
+      </div>
+      <div class="proyecto-card reveal">
+        <div class="proyecto-preview preview-sg">
+          <div class="preview-sg-inner">
+            <div class="pname">Simo & Gena</div>
+            <div class="ptag">Tienda bebés · La Plata</div>
+          </div>
+          <span class="preview-sg-badge">✓ Publicado</span>
+        </div>
+        <div class="proyecto-info">
+          <div class="proyecto-tags">
+            <span class="proyecto-tag">Catálogo web</span>
+            <span class="proyecto-tag verde">Tienda bebés</span>
+          </div>
+          <h3>Simo & Gena</h3>
+          <p>Catálogo web autogestionable para tienda de artículos de bebé. Productos editables desde Google Sheets, diseño cálido y enfocado en convertir visitas en consultas por WhatsApp.</p>
+          <a href="https://simoygena.com.ar" target="_blank" class="proyecto-link">Ver sitio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contacto-wrap">
+      <div class="contacto-info reveal">
+        <div class="section-eyebrow">Contacto</div>
+        <h2>¿Arrancamos<br>con tu <em>proyecto</em>?</h2>
+        <p>Contame qué necesitás y te respondo en menos de 24 horas con una propuesta sin compromiso.</p>
+        <div class="contacto-canales">
+          <a href="https://wa.me/5492214358401?text=Hola%20Martin%2C%20vi%20tu%20portfolio%20y%20me%20interesa%20hablar%20sobre%20mi%20proyecto" target="_blank" class="canal">
+            <div class="canal-icono wsp">💬</div>
+            <div class="canal-texto">
+              <h4>WhatsApp</h4>
+              <p>+54 9 221 435-8401</p>
+            </div>
+          </a>
+          <a href="mailto:contacto&#64;martinromero.com.ar" class="canal">
+            <div class="canal-icono mail">✉️</div>
+            <div class="canal-texto">
+              <h4>Email</h4>
+              <p>contacto&#64;martinromero.com.ar</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contacto-form reveal">
+        <div class="form-title">Contame tu proyecto</div>
+        <form id="contacto-form" action="https://formspree.io/f/xojpypag" method="POST">
+          <div class="form-group">
+            <label>Tu nombre</label>
+            <input type="text" name="nombre" placeholder="Juan García" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="juan@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label>Tipo de proyecto</label>
+            <select name="tipo">
+              <option value="">Seleccioná una opción</option>
+              <option>Landing Page</option>
+              <option>Sitio institucional</option>
+              <option>Rediseño web</option>
+              <option>Mantenimiento</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Contame más</label>
+            <textarea name="mensaje" placeholder="¿Qué necesitás? ¿Tenés sitio actual? ¿Cuándo necesitás tenerlo listo?"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Enviar mensaje →</button>
+        </form>
+        <div class="form-confirmacion" id="form-confirmacion">
+          <div class="confirmacion-icono">✓</div>
+          <div class="confirmacion-titulo">¡Mensaje enviado!</div>
+          <p class="confirmacion-texto">Gracias por escribirme. Te respondo a la brevedad a través del email que dejaste.<br><br><em>— Martin Romero Studio</em></p>
+          <button class="confirmacion-btn" onclick="resetForm()">Enviar otro mensaje</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg width="160" height="52" viewBox="0 0 220 65" xmlns="http://www.w3.org/2000/svg">
+      <line x1="8" y1="32" x2="24" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="8" cy="32" r="2" fill="#c8a96e"/>
+      <line x1="162" y1="32" x2="178" y2="32" stroke="#c8a96e" stroke-width="1"/>
+      <circle cx="178" cy="32" r="2" fill="#c8a96e"/>
+      <text x="93" y="21" font-family="Cormorant Garamond, serif" font-size="11" font-weight="600" letter-spacing="5" fill="#fafaf7" text-anchor="middle">MARTIN</text>
+      <text x="93" y="40" font-family="Cormorant Garamond, serif" font-size="22" font-weight="700" letter-spacing="2" fill="#fafaf7" text-anchor="middle">ROMERO</text>
+      <line x1="38" y1="46" x2="148" y2="46" stroke="#c8a96e" stroke-width="0.8"/>
+      <text x="93" y="57" font-family="Plus Jakarta Sans, sans-serif" font-size="6" font-weight="300" letter-spacing="6" fill="#c8a96e" text-anchor="middle">STUDIO</text>
+    </svg>
+  </div>
+  <p class="footer-tagline">Presencia digital para negocios reales · La Plata, Buenos Aires</p>
+  <ul class="footer-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="planes.html">Planes</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="https://wa.me/5492214358401" target="_blank">WhatsApp</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Martin Romero Studio · martinromero.com.ar</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  document.body.classList.add('js-ready');
+  const nav = document.getElementById('navbar');
+  const wspFloat = document.getElementById('wsp-float');
+  const liFloat = document.getElementById('li-float');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    wspFloat.classList.toggle('visible', window.scrollY > 300);
+    liFloat.classList.toggle('visible', window.scrollY > 300);
+  });
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+  const form = document.getElementById('contacto-form');
+  const confirmacion = document.getElementById('form-confirmacion');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.form-submit');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+    try {
+      const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+      if (response.ok) { form.style.display = 'none'; confirmacion.classList.add('visible'); }
+      else { btn.textContent = 'Error al enviar. Intentá de nuevo.'; btn.disabled = false; }
+    } catch (err) { btn.textContent = 'Error al enviar. Intentá de nuevo.'; btn.disabled = false; }
+  });
+  function resetForm() {
+    form.reset(); form.style.display = 'block'; confirmacion.classList.remove('visible');
+    const btn = form.querySelector('.form-submit');
+    btn.textContent = 'Enviar mensaje →'; btn.disabled = false;
+  }
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const isOpen = links.classList.contains('mobile-open');
+    if (isOpen) { closeMobileMenu(); }
+    else {
+      links.classList.add('mobile-open');
+      links.style.display = 'flex'; links.style.flexDirection = 'column';
+      links.style.position = 'fixed'; links.style.top = '60px';
+      links.style.left = '0'; links.style.right = '0';
+      links.style.background = 'rgba(240,228,204,0.98)';
+      links.style.padding = '1.5rem 2rem';
+      links.style.borderBottom = '1px solid #e8e4dc';
+      links.style.gap = '1.25rem';
+      links.style.backdropFilter = 'blur(10px)';
+      links.style.zIndex = '99';
+    }
+  }
+  function closeMobileMenu() {
+    const links = document.querySelector('.nav-links');
+    links.classList.remove('mobile-open');
+    links.style.display = 'none';
+  }
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => { if (window.innerWidth <= 680) closeMobileMenu(); });
+  });
+</script>
+</body>
+</html>
