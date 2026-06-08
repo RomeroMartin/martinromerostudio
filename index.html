@@ -45,6 +45,7 @@
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
   .hamburger span{display:block;width:22px;height:1.5px;background:var(--negro);transition:all 0.3s;}
   @media(max-width:680px){.nav-links{display:none;}.hamburger{display:flex;}nav{padding:1rem 1.25rem;}}
+  #menu-overlay{display:none;position:fixed;inset:0;z-index:98;}
 
   /* WHATSAPP FLOTANTE */
   .wsp-float{position:fixed;bottom:2rem;right:2rem;z-index:200;width:46px;height:46px;border-radius:50%;background:var(--negro);border:1.5px solid var(--acento);display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:translateY(10px);transition:opacity 0.4s ease,transform 0.4s ease,background 0.2s,box-shadow 0.2s;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
@@ -227,6 +228,7 @@
     <span></span><span></span><span></span>
   </div>
 </nav>
+<div id="menu-overlay" onclick="closeMobileMenu()"></div>
 
 <!-- HERO -->
 <section class="hero" id="inicio">
@@ -544,12 +546,14 @@
       links.style.gap = '1.25rem';
       links.style.backdropFilter = 'blur(10px)';
       links.style.zIndex = '99';
+      document.getElementById('menu-overlay').style.display = 'block';
     }
   }
   function closeMobileMenu() {
     const links = document.querySelector('.nav-links');
     links.classList.remove('mobile-open');
     links.style.display = 'none';
+    document.getElementById('menu-overlay').style.display = 'none';
   }
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => { if (window.innerWidth <= 680) closeMobileMenu(); });
