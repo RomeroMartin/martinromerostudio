@@ -16,8 +16,11 @@
     --gris: #6b6b68;
     --verde: #4a7c59;
     --verde-claro: #d4e8da;
+    --acento-lg: #a07e3d;
   }
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :focus-visible { outline: 2px solid #7d6330; outline-offset: 2px; }
+  .btn-volver:focus-visible { outline-color: #f0e4cc; outline-offset: 3px; }
   html, body { height: 100%; }
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -87,7 +90,7 @@
     margin-bottom: 0.75rem;
     animation: fadeUp 0.6s 0.3s ease both;
   }
-  .titulo em { font-style: italic; color: var(--acento); }
+  .titulo em { font-style: italic; color: var(--acento-lg); }
 
   .subtitulo {
     font-size: 0.95rem;
