@@ -5,47 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Página no encontrada · Martin Romero Studio</title>
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#f7f2ea">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='56' height='56' rx='10' fill='%23f0e4cc'/%3E%3Ctext x='28' y='36' font-family='Georgia%2Cserif' font-size='22' font-weight='700' letter-spacing='1' fill='%231c1c1a' text-anchor='middle'%3EMR%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#0e1217">
+<link rel="icon" type="image/svg+xml" href="logo/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="logo/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="logo/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--negro:#1c1c1a;--acento:#c8a96e;--crema:#f7f2ea;--gris:#6b6b68;}
+:root{--dark:#0e1217;--dark-ink:#eceff3;--dark-muted:#8b95a2;--dark-line:#222a35;--accent:#3d6bc4;--accent-light:#7fb2e8;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--negro);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;position:relative;overflow:hidden;}
-body::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 80% 20%,rgba(200,169,110,0.1) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(74,124,89,0.07) 0%,transparent 55%);pointer-events:none;}
+body{font-family:'Archivo',system-ui,sans-serif;background:var(--dark);color:var(--dark-ink);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;position:relative;overflow:hidden;}
+body::before{content:'';position:absolute;inset:0;background-image:linear-gradient(#ffffff0a 1px,transparent 1px),linear-gradient(90deg,#ffffff0a 1px,transparent 1px);background-size:64px 64px;pointer-events:none;}
+body::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom left,rgba(61,107,196,0.20) 0%,rgba(61,107,196,0.07) 32%,rgba(61,107,196,0.02) 58%,rgba(14,18,23,0) 80%);pointer-events:none;}
 .wrap{position:relative;z-index:1;max-width:520px;}
-.logo{margin-bottom:2.5rem;}
-.code{font-family:'Cormorant Garamond',serif;font-size:clamp(4.5rem,18vw,8rem);font-weight:700;line-height:1;color:var(--acento);}
-.titulo{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,5vw,2.2rem);font-weight:700;line-height:1.15;margin-bottom:0.75rem;}
-.titulo em{font-style:italic;color:var(--acento);}
-.subtitulo{font-size:0.95rem;color:var(--gris);font-weight:300;line-height:1.7;margin-bottom:2rem;}
-.btn{display:inline-flex;align-items:center;gap:0.5rem;background:var(--negro);color:white;padding:0.85rem 1.75rem;border-radius:8px;font-size:0.85rem;font-weight:500;text-decoration:none;transition:all 0.25s;}
-.btn:hover{background:var(--acento);color:var(--negro);transform:translateY(-2px);}
+.logo{margin-bottom:2.5rem;display:flex;justify-content:center;}
+.code{font-family:'Spline Sans Mono',monospace;font-size:clamp(4.5rem,18vw,8rem);font-weight:500;line-height:1;color:var(--accent-light);letter-spacing:0.02em;}
+.titulo{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:600;letter-spacing:-0.03em;line-height:1.15;margin-bottom:0.75rem;}
+.titulo .hl{color:var(--accent-light);}
+.subtitulo{font-size:0.95rem;color:var(--dark-muted);font-weight:400;line-height:1.7;margin-bottom:2rem;}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;background:var(--accent-light);color:var(--dark);padding:0.85rem 1.75rem;border-radius:7px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.25s;}
+.btn:hover{background:#fff;transform:translateY(-2px);}
 .ornament{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:1rem;}
-.orn-line{width:20px;height:1px;background:var(--acento);}
-.orn-dot{width:4px;height:4px;border-radius:50%;background:var(--acento);}
+.orn-line{width:20px;height:1px;background:var(--accent-light);}
+.orn-dot{width:4px;height:4px;border-radius:50%;background:var(--accent-light);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="logo">
-<svg width="170" height="48" viewBox="0 0 220 65" xmlns="http://www.w3.org/2000/svg">
-<line x1="18" y1="32" x2="34" y2="32" stroke="#c8a96e" stroke-width="1"/>
-<circle cx="18" cy="32" r="2" fill="#c8a96e"/>
-<line x1="186" y1="32" x2="202" y2="32" stroke="#c8a96e" stroke-width="1"/>
-<circle cx="202" cy="32" r="2" fill="#c8a96e"/>
-<text x="110" y="21" font-family="Cormorant Garamond, serif" font-size="11" font-weight="600" letter-spacing="5" fill="#1c1c1a" text-anchor="middle">MARTIN</text>
-<text x="110" y="40" font-family="Cormorant Garamond, serif" font-size="22" font-weight="700" letter-spacing="2" fill="#1c1c1a" text-anchor="middle">ROMERO</text>
-<line x1="50" y1="46" x2="170" y2="46" stroke="#c8a96e" stroke-width="0.8"/>
-<text x="110" y="57" font-family="Plus Jakarta Sans, sans-serif" font-size="6" font-weight="300" letter-spacing="6" fill="#c8a96e" text-anchor="middle">STUDIO</text>
+<svg width="210" height="35" viewBox="0 0 240 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Martin Romero Studio">
+<g><rect x="0" y="5" width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="13" width="16" height="3" fill="#fff"/><rect x="7" y="13" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="13" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="13" width="3.5" height="8" fill="#fff"/></g>
+<text x="40" y="19" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="-0.3" fill="#eceff3">Martin Romero</text>
+<text x="40" y="31" font-family="'Spline Sans Mono', ui-monospace, monospace" font-size="8" letter-spacing="2.9" fill="#7fb2e8">STUDIO</text>
 </svg>
 </div>
 <div class="code">404</div>
 <div class="ornament"><div class="orn-line"></div><div class="orn-dot"></div><div class="orn-line"></div></div>
-<h1 class="titulo">Esta página <em>no existe</em></h1>
+<h1 class="titulo">Esta página <span class="hl">no existe</span></h1>
 <p class="subtitulo">Puede que el enlace esté roto o que la página se haya movido. Volvé al inicio y seguimos.</p>
 <a href="/" class="btn">Volver al inicio →</a>
 </div>
