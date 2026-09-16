@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aceptación de servicios · Martin Romero Studio</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --acento: #3d6bc4;
+    --acento-claro: #7fb2e8;
+    --tinta: #12161c;
+    --oscuro: #0e1217;
+    --claro: #f2f4f6;
+    --linea: #e0e4e9;
+    --gris: #5c6672;
+    --gris-2: #8b95a2;
+    --gris-3: #a6b0bd;
+    --blanco: #ffffff;
+    --alerta: #a03a3a;
+    --sans: 'Archivo', system-ui, sans-serif;
+    --mono: 'Spline Sans Mono', ui-monospace, monospace;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--claro);
+    color: var(--tinta);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    padding: 2rem 1rem 4rem;
+  }
+
+  /* ───────── Barra de herramientas (no se imprime) ───────── */
+  .toolbar {
+    max-width: 820px;
+    margin: 0 auto 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .toolbar p { font-size: 0.8rem; color: var(--gris); max-width: 420px; }
+  .toolbar-actions { display: flex; gap: 0.5rem; }
+  .btn {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    color: var(--tinta);
+    cursor: pointer;
+  }
+  .btn:hover { border-color: var(--gris-2); }
+  .btn-primary { background: var(--acento); border-color: var(--acento); color: var(--blanco); }
+  .btn-primary:hover { background: #3360b3; border-color: #3360b3; }
+  .btn:focus-visible, input:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+  /* ───────── Hoja ───────── */
+  .doc {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--blanco);
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .doc-body { padding: 2.25rem 3rem 2.5rem; }
+
+  /* ───────── Cabecera oscura ───────── */
+  .doc-head {
+    position: relative;
+    background: var(--oscuro);
+    color: #eceff3;
+    padding: 2.25rem 3rem 2rem;
+    overflow: hidden;
+  }
+  .doc-head::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: linear-gradient(#ffffff0a 1px, transparent 1px), linear-gradient(90deg, #ffffff0a 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .doc-head::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom left, rgba(61,107,196,0.24) 0%, rgba(61,107,196,0.07) 35%, rgba(14,18,23,0) 75%);
+  }
+  .doc-head > * { position: relative; z-index: 1; }
+  .head-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .isologo { display: flex; align-items: center; gap: 0.7rem; }
+  .isologo svg { display: block; }
+  .isologo-text { display: flex; flex-direction: column; line-height: 1.05; }
+  .isologo-name { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.03em; }
+  .isologo-sub { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--acento-claro); }
+
+  .head-contact {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--gris-2);
+    text-align: right;
+    line-height: 1.7;
+  }
+  .head-contact a { color: var(--gris-3); text-decoration: none; }
+
+  .head-title { margin-top: 2.25rem; }
+  .eyebrow {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--acento-claro);
+    margin-bottom: 0.6rem;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+  .head-title h1 {
+    font-size: 2.3rem;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+  }
+
+  /* ───────── Datos del documento y cliente ───────── */
+  .meta {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; align-items: baseline; gap: 0.6rem; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gris-2);
+  }
+
+  input[type="text"], input[type="date"], input[type="number"], input[type="email"], input[type="tel"] {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--tinta);
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #c9d3de;
+    padding: 0.15rem 0.2rem;
+    width: 100%;
+    border-radius: 0;
+  }
+  input:focus { outline: none; border-bottom: 1px solid var(--acento); background: rgba(61,107,196,0.05); }
+  input.mono { font-family: var(--mono); font-size: 0.82rem; }
+  .meta input { width: 150px; }
+  input.input-desc { font-size: 0.8rem; margin-top: 0.3rem; }
+
+  .client {
+    background: var(--claro);
+    border: 1px solid var(--linea);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem 2rem;
+    margin-bottom: 2.25rem;
+  }
+  .field { display: flex; flex-direction: column; gap: 0.2rem; }
+  .field.full { grid-column: 1 / -1; }
+
+  /* ───────── Secciones ───────── */
+  .section { margin-bottom: 2rem; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding-bottom: 0.55rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--linea);
+  }
+  .section-num { font-family: var(--mono); font-size: 0.72rem; color: var(--acento); }
+  .section-head h2 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.2; }
+
+  /* ───────── Servicios ───────── */
+  .svc-group { margin-bottom: 1.4rem; }
+  .svc-group-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+  }
+  .svc-group-head h3 { font-size: 0.92rem; font-weight: 600; letter-spacing: -0.01em; }
+  .svc-group-head span { font-size: 0.75rem; color: var(--gris-2); }
+
+  .svc {
+    display: grid;
+    grid-template-columns: 18px 1fr auto;
+    align-items: start;
+    gap: 0.8rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .svc + .svc { margin-top: 0.15rem; }
+  .svc:hover { background: var(--claro); }
+  .svc.is-on { background: rgba(61,107,196,0.06); border-color: rgba(61,107,196,0.25); }
+  .svc input[type="checkbox"] {
+    width: 16px; height: 16px; margin-top: 0.2rem;
+    accent-color: var(--acento);
+    cursor: pointer;
+  }
+  .svc-name { font-size: 0.9rem; font-weight: 500; display: block; }
+  .svc-note { font-size: 0.76rem; color: var(--gris); display: block; line-height: 1.45; margin-top: 0.1rem; }
+  .svc-price {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    white-space: nowrap;
+    text-align: right;
+    padding-top: 0.1rem;
+  }
+  .svc-price small { font-size: 0.7rem; color: var(--gris-2); font-weight: 400; }
+
+  .svc-input {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    margin-top: 0.4rem;
+    max-width: 260px;
+  }
+  .svc-input span { font-family: var(--mono); font-size: 0.8rem; color: var(--gris); }
+  .svc-input input { font-family: var(--mono); font-size: 0.82rem; }
+  .svc-warn { font-size: 0.72rem; color: var(--alerta); margin-top: 0.25rem; display: none; }
+  .svc-warn.show { display: block; }
+
+  /* ───────── Totales ───────── */
+  .totals {
+    background: var(--oscuro);
+    color: #eceff3;
+    border-radius: 10px;
+    padding: 1.3rem 1.5rem;
+    margin-top: 1.25rem;
+  }
+  .t-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.3rem 0;
+  }
+  .t-row .t-label { font-size: 0.85rem; color: var(--gris-3); }
+  .t-row .t-value { font-family: var(--mono); font-size: 0.95rem; font-weight: 500; white-space: nowrap; }
+  .t-row.main .t-label { color: #eceff3; font-weight: 600; }
+  .t-row.main .t-value { font-size: 1.05rem; }
+  .t-row.accent .t-label { color: #eceff3; font-weight: 600; }
+  .t-row.accent .t-value { color: var(--acento-claro); font-size: 1.2rem; }
+  .t-sep { border: none; border-top: 1px solid #222a35; margin: 0.55rem 0; }
+  .t-row.small .t-label, .t-row.small .t-value { font-size: 0.78rem; color: var(--gris-2); }
+  .t-row[hidden] { display: none; }
+
+  /* ───────── Condiciones ───────── */
+  .cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .cond { border: 1px solid var(--linea); border-radius: 10px; padding: 1rem 1.15rem; }
+  .cond h3 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.45rem; }
+  .cond ul { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+  .cond li { font-size: 0.8rem; color: var(--gris); padding-left: 0.9rem; position: relative; line-height: 1.5; }
+  .cond li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 4px; height: 4px; background: var(--acento); }
+  .cond li strong { color: var(--tinta); font-weight: 600; }
+
+  .lead { font-size: 0.84rem; color: var(--gris); margin-bottom: 0.9rem; max-width: 64ch; }
+  .lead strong { color: var(--tinta); font-weight: 600; }
+
+  .plazos { width: 100%; border-collapse: collapse; }
+  .plazos td { padding: 0.5rem 0.2rem; border-bottom: 1px solid var(--linea); font-size: 0.85rem; }
+  .plazos td:last-child { font-family: var(--mono); font-size: 0.8rem; text-align: right; }
+  .plazos tr:last-child td { border-bottom: none; }
+
+  .clause {
+    font-size: 0.84rem;
+    color: var(--gris);
+    line-height: 1.65;
+    padding: 0.2rem 0 0.2rem 1rem;
+    border-left: 2px solid var(--linea);
+    margin-bottom: 0.75rem;
+    max-width: 70ch;
+  }
+  .clause strong { color: var(--tinta); font-weight: 600; }
+
+  /* ───────── Aceptación ───────── */
+  .accept { border: 1px solid var(--acento); border-radius: 10px; padding: 1.5rem 1.6rem; }
+  .accept h2 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 0.6rem; }
+  .accept p { font-size: 0.84rem; color: var(--gris); line-height: 1.7; max-width: 68ch; }
+  .accept p strong { color: var(--tinta); font-weight: 600; }
+  .sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2.5rem; }
+  .sig-line { border-bottom: 1px solid var(--tinta); height: 3rem; margin-bottom: 0.45rem; }
+  .sig-name { font-size: 0.85rem; font-weight: 600; min-height: 1.3em; }
+  .sig-role { font-family: var(--mono); font-size: 0.68rem; color: var(--gris-2); }
+
+  /* ───────── Pie ───────── */
+  .doc-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--linea);
+  }
+  .doc-foot .isologo-name { font-size: 0.9rem; color: var(--tinta); }
+  .doc-foot .isologo-sub { font-size: 0.55rem; color: var(--acento); }
+  .foot-meta { font-family: var(--mono); font-size: 0.68rem; color: var(--gris-2); }
+
+  /* ───────── Mobile ───────── */
+  @media (max-width: 640px) {
+    .doc-head, .doc-body { padding-left: 1.4rem; padding-right: 1.4rem; }
+    .head-contact { text-align: left; }
+    .head-title h1 { font-size: 1.8rem; }
+    .client, .cond-grid, .sigs { grid-template-columns: 1fr; }
+    .meta { justify-content: flex-start; }
+  }
+
+  /* ───────── Impresión / PDF ───────── */
+  @page { size: A4; margin: 12mm 0; }
+  @page :first { margin-top: 0; }
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { background: var(--blanco); padding: 0; }
+    .toolbar, .no-print, .svc-warn { display: none !important; }
+    .doc { border: none; border-radius: 0; max-width: none; overflow: visible; }
+    .doc-head { padding: 1.6rem 16mm 1.6rem; }
+    .doc-body { padding: 1.6rem 16mm 0; }
+    .svc:hover, .svc.is-on { background: transparent; border-color: transparent; }
+    .svc input[type="checkbox"] { display: none; }
+    .svc { grid-template-columns: 1fr auto; padding: 0.45rem 0; border-bottom: 1px solid var(--linea); border-radius: 0; }
+    .svc + .svc { margin-top: 0; }
+    input { border-bottom: 1px solid var(--linea) !important; }
+    input.input-desc:placeholder-shown { display: none; }
+
+    /* Con algo seleccionado, el PDF muestra solo lo contratado */
+    body.has-selection .svc:not(.is-on),
+    body.has-selection .svc-group:not(.has-on) { display: none; }
+
+    .cond, .totals, .accept, .svc, .doc-foot, .clause, .plazos { break-inside: avoid; }
+    .section-head { break-after: avoid; }
+    .client { margin-bottom: 1.6rem; }
+    .head-title { margin-top: 1.5rem; }
+    .page-break { break-before: page; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <p>Marcá los servicios y completá los datos. Al guardar como PDF solo aparecen los servicios seleccionados.</p>
+  <div class="toolbar-actions">
+    <button class="btn" type="button" id="btn-limpiar">Limpiar</button>
+    <button class="btn btn-primary" type="button" onclick="window.print()">Guardar como PDF</button>
+  </div>
+</div>
+
+<main class="doc">
+
+  <header class="doc-head">
+    <div class="head-top">
+      <div class="isologo">
+        <svg width="40" height="40" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+        <span class="isologo-text">
+          <span class="isologo-name">Martin Romero</span>
+          <span class="isologo-sub">studio</span>
+        </span>
+      </div>
+      <div class="head-contact">
+        <a href="https://martinromerostudio.com.ar">martinromerostudio.com.ar</a><br>
+        <a href="mailto:contacto@martinromerostudio.com.ar">contacto@martinromerostudio.com.ar</a><br>
+        +54 9 221 435-8401 · La Plata, Buenos Aires
+      </div>
+    </div>
+    <div class="head-title">
+      <div class="eyebrow">Documento comercial</div>
+      <h1>Aceptación de servicios</h1>
+    </div>
+  </header>
+
+  <div class="doc-body">
+
+    <div class="meta">
+      <label class="meta-item"><span class="label">Fecha</span><input type="date" id="fecha" class="mono"></label>
+      <label class="meta-item"><span class="label">Doc. N°</span><input type="text" id="docnum" class="mono" placeholder="MRS-0001"></label>
+    </div>
+
+    <section class="client" aria-label="Datos del cliente">
+      <label class="field full"><span class="label">Nombre completo o razón social</span><input type="text" id="cliente-nombre" placeholder="Ej: Florería El Jardín / María González"></label>
+      <label class="field"><span class="label">CUIT / DNI</span><input type="text" class="mono" placeholder="20-12345678-9"></label>
+      <label class="field"><span class="label">Domicilio</span><input type="text" placeholder="Calle 123, La Plata"></label>
+      <label class="field"><span class="label">Email</span><input type="email" placeholder="cliente@email.com"></label>
+      <label class="field"><span class="label">Teléfono / WhatsApp</span><input type="tel" class="mono" placeholder="+54 9 221 000-0000"></label>
+    </section>
+
+    <!-- 01 SERVICIOS -->
+    <section class="section">
+      <div class="section-head"><span class="section-num">01</span><h2>Servicios contratados</h2></div>
+
+      <div class="svc-group">
+        <div class="svc-group-head"><h3>Desarrollo web</h3><span>Pago único · un plan</span></div>
+        <label class="svc">
+          <input type="checkbox" data-price="179000" data-exclusive="plan">
+          <span><span class="svc-name">Plan Presencia</span><span class="svc-note">Landing page profesional, botón a WhatsApp, formulario, SEO básico, conexión con tu dominio y primer mes de soporte.</span></span>
+          <span class="svc-price">$ 179.000</span>
+        </label>
+        <label class="svc">
+          <input type="checkbox" data-price="339000" data-exclusive="plan">
+          <span><span class="svc-name">Plan Negocio</span><span class="svc-note">Todo lo del Plan Presencia, hasta 5 secciones, galería, mapa, Google Business con reseñas y SEO local.</span></span>
+          <span class="svc-price">$ 339.000</span>
+        </label>
+        <label class="svc">
+          <input type="checkbox" data-price="549000" data-exclusive="plan">
+          <span><span class="svc-name">Plan Catálogo Smart</span><span class="svc-note">Todo lo del Plan Negocio, catálogo autogestionable con panel propio, carrito a WhatsApp, filtros y buscador. Carga inicial de hasta 30 artículos.</span></span>
+          <span class="svc-price">$ 549.000</span>
+        </label>
+      </div>
+
+      <div class="svc-group">
+        <div class="svc-group-head"><h3>WebApps y sistemas a medida</h3><span>Pago único · según complejidad</span></div>
+        <div class="svc" data-custom>
+          <input type="checkbox" id="chk-webapp" data-price="0" data-min="599000">
+          <span>
+            <span class="svc-name">WebApp a medida</span>
+            <input type="text" class="input-desc" placeholder="Describí el sistema (ej: control de stock y proveedores)">
+            <span class="svc-input no-print"><span>$</span><input type="number" min="0" step="1000" data-price-for="chk-webapp" placeholder="Desde 599000"></span>
+            <span class="svc-warn" data-warn-for="chk-webapp">El precio publicado arranca en $ 599.000.</span>
+          </span>
+          <span class="svc-price" data-display-for="chk-webapp" data-base="Desde $ 599.000">Desde $ 599.000</span>
+        </div>
+      </div>
+
+      <div class="svc-group">
+        <div class="svc-group-head"><h3>Adicionales</h3><span>Pago único</span></div>
+        <label class="svc">
+          <input type="checkbox" data-price="22000">
+          <span><span class="svc-name">Gestión de dominio .com.ar</span><span class="svc-note">Trámite completo en NIC.ar, registrado a nombre y CUIT del cliente.</span></span>
+          <span class="svc-price">$ 22.000</span>
+        </label>
+        <label class="svc">
+          <input type="checkbox" data-price="85000">
+          <span><span class="svc-name">Sitio en dos idiomas</span><span class="svc-note">Versión completa en inglés con botón de cambio de idioma.</span></span>
+          <span class="svc-price">$ 85.000</span>
+        </label>
+        <label class="svc">
+          <input type="checkbox" data-price="35000">
+          <span><span class="svc-name">Sección adicional estática</span><span class="svc-note">Nueva página o sección con el mismo diseño del sitio.</span></span>
+          <span class="svc-price">$ 35.000</span>
+        </label>
+        <label class="svc">
+          <input type="checkbox" data-price="75000">
+          <span><span class="svc-name">Entrega express</span><span class="svc-note">Desarrollo prioritario en 48 a 72 horas.</span></span>
+          <span class="svc-price">$ 75.000</span>
+        </label>
+        <label class="svc">
+          <input type="checkbox" data-price="65000">
+          <span><span class="svc-name">Creación y optimización de Perfil de Google</span><span class="svc-note">Perfil de Google Business desde cero: categorías, horarios, descripción, fotos y estrategia de reseñas.</span></span>
+          <span class="svc-price">$ 65.000</span>
+        </label>
+        <div class="svc" data-custom>
+          <input type="checkbox" id="chk-modulo" data-price="0" data-min="45000">
+          <span>
+            <span class="svc-name">Sección o módulo interactivo</span>
+            <input type="text" class="input-desc" placeholder="Ej: calculadora de presupuesto, simulador de cuotas">
+            <span class="svc-input no-print"><span>$</span><input type="number" min="0" step="1000" data-price-for="chk-modulo" placeholder="Desde 45000"></span>
+            <span class="svc-warn" data-warn-for="chk-modulo">El precio publicado arranca en $ 45.000.</span>
+          </span>
+          <span class="svc-price" data-display-for="chk-modulo" data-base="Desde $ 45.000">Desde $ 45.000</span>
+        </div>
+        <div class="svc" data-custom>
+          <input type="checkbox" id="chk-otro" data-price="0">
+          <span>
+            <input type="text" placeholder="Otro servicio acordado">
+            <span class="svc-input no-print"><span>$</span><input type="number" min="0" step="1000" data-price-for="chk-otro" placeholder="0"></span>
+          </span>
+          <span class="svc-price" data-display-for="chk-otro" data-base=""></span>
+        </div>
+      </div>
+
+      <div class="svc-group">
+        <div class="svc-group-head"><h3>Planes mensuales</h3><span>Opcional · suscripción por MercadoPago</span></div>
+        <label class="svc">
+          <input type="checkbox" data-price="18000" data-billing="mensual" data-exclusive="mensual">
+          <span><span class="svc-name">Mantenimiento &amp; Base</span><span class="svc-note">Infraestructura cloud, SSL, gestión y renovación del dominio, monitoreo 24/7 y soporte técnico general.</span></span>
+          <span class="svc-price">$ 18.000 <small>/ mes</small></span>
+        </label>
+        <label class="svc">
+          <input type="checkbox" data-price="38000" data-billing="mensual" data-exclusive="mensual">
+          <span><span class="svc-name">Partner Digital Full</span><span class="svc-note">Todo Mantenimiento &amp; Base, hasta 4 actualizaciones de contenido por mes y atención prioritaria por WhatsApp.</span></span>
+          <span class="svc-price">$ 38.000 <small>/ mes</small></span>
+        </label>
+      </div>
+
+      <div class="totals" aria-live="polite">
+        <div class="t-row main"><span class="t-label">Total pago único</span><span class="t-value" id="t-total">$ 0</span></div>
+        <div class="t-row accent"><span class="t-label">Total con transferencia (10% off)</span><span class="t-value" id="t-transf">$ 0</span></div>
+        <hr class="t-sep">
+        <div class="t-row small"><span class="t-label">Seña 50% por MercadoPago</span><span class="t-value" id="t-sena-mp">$ 0</span></div>
+        <div class="t-row small"><span class="t-label">Seña 50% por transferencia</span><span class="t-value" id="t-sena-tr">$ 0</span></div>
+        <div class="t-row main" id="row-mensual" hidden><span class="t-label">Abono mensual</span><span class="t-value" id="t-mensual">$ 0 / mes</span></div>
+      </div>
+    </section>
+
+    <!-- 02 CONDICIONES DE PAGO -->
+    <section class="section">
+      <div class="section-head"><span class="section-num">02</span><h2>Condiciones de pago</h2></div>
+      <div class="cond-grid">
+        <div class="cond">
+          <h3>Desarrollos web y WebApps</h3>
+          <ul>
+            <li><strong>50% al aceptar</strong> este documento, en concepto de seña.</li>
+            <li><strong>50% restante</strong> al finalizar el trabajo, antes de la entrega.</li>
+          </ul>
+        </div>
+        <div class="cond">
+          <h3>Formas de pago</h3>
+          <ul>
+            <li><strong>Transferencia bancaria</strong> con 10% de descuento sobre el total.</li>
+            <li><strong>MercadoPago</strong> en un pago.</li>
+            <li>Planes mensuales: <strong>suscripción automática</strong> por MercadoPago, cancelable en cualquier momento.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 PLAZOS -->
+    <section class="section">
+      <div class="section-head"><span class="section-num">03</span><h2>Plazos de entrega</h2></div>
+      <p class="lead">Los plazos comienzan cuando se cumplen las dos condiciones: <strong>pago de la seña</strong> y <strong>entrega completa de materiales</strong> por parte del cliente (textos, imágenes, logo y links).</p>
+      <table class="plazos">
+        <tr><td>Plan Presencia</td><td>7 días hábiles</td></tr>
+        <tr><td>Plan Negocio</td><td>15 días hábiles</td></tr>
+        <tr><td>Plan Catálogo Smart</td><td>20 a 25 días hábiles</td></tr>
+        <tr><td>WebApp a medida</td><td>Según complejidad acordada</td></tr>
+        <tr><td>Con entrega express</td><td>48 a 72 horas</td></tr>
+      </table>
+    </section>
+
+    <!-- 04 ALCANCE -->
+    <section class="section">
+      <div class="section-head"><span class="section-num">04</span><h2>Alcance</h2></div>
+      <div class="clause">Los planes de desarrollo <strong>no incluyen</strong> cobro con tarjeta integrado en vivo (e-commerce) ni facturación electrónica con AFIP o sistemas contables (ERP).</div>
+      <div class="clause">Cualquier funcionalidad, sección o carga de contenido que no figure en los servicios contratados se cotiza por separado antes de realizarse.</div>
+    </section>
+
+    <!-- 05 DEMORAS -->
+    <section class="section">
+      <div class="section-head"><span class="section-num">05</span><h2>Demoras por parte del cliente</h2></div>
+      <div class="clause">Si el cliente demora la entrega de materiales o aprobaciones por más de <strong>15 días corridos</strong>, Martin Romero Studio podrá actualizar el valor del saldo restante según la tarifa vigente al reanudar el trabajo y/o reprogramar la fecha de entrega.</div>
+    </section>
+
+    <!-- 06 SEÑA Y CANCELACIÓN -->
+    <section class="section">
+      <div class="section-head"><span class="section-num">06</span><h2>Seña y cancelación</h2></div>
+      <div class="clause">La seña <strong>no es reembolsable</strong> en caso de desistimiento del cliente, demora excesiva en la entrega de materiales o incumplimiento de las condiciones acordadas.</div>
+    </section>
+
+    <!-- 07 PROPIEDAD -->
+    <section class="section">
+      <div class="section-head"><span class="section-num">07</span><h2>Propiedad y portfolio</h2></div>
+      <div class="clause">Una vez abonado el <strong>saldo total</strong>, el cliente obtiene la plena propiedad del sitio, los archivos fuente y todos los accesos, sin dependencias ni ataduras. El dominio .com.ar queda registrado a nombre del cliente.</div>
+      <div class="clause">Martin Romero Studio se reserva el derecho de <strong>publicar el proyecto</strong> en su portfolio, sitio web y redes sociales.</div>
+    </section>
+
+    <!-- ACEPTACIÓN -->
+    <section class="accept">
+      <h2>Aceptación del cliente</h2>
+      <p>Al firmar este documento <strong>o al responder el email de envío con la palabra "ACEPTO"</strong>, el cliente declara haber leído, comprendido y aceptado la totalidad de los servicios, valores, condiciones y términos aquí detallados. Este documento tiene validez como acuerdo comercial vinculante entre las partes.</p>
+      <div class="sigs">
+        <div>
+          <div class="sig-line"></div>
+          <div class="sig-name" id="sig-cliente"></div>
+          <div class="sig-role">Firma y aclaración del cliente</div>
+        </div>
+        <div>
+          <div class="sig-line"></div>
+          <div class="sig-name">Martín Romero</div>
+          <div class="sig-role">Martin Romero Studio</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="doc-foot">
+      <div class="isologo">
+        <svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+        <span class="isologo-text"><span class="isologo-name">Martin Romero</span><span class="isologo-sub">studio</span></span>
+      </div>
+      <div class="foot-meta">Doc. N° <span id="foot-docnum">MRS-0001</span> · <span id="foot-fecha"></span></div>
+    </footer>
+
+  </div>
+</main>
+
+<script>
+  const fmt = n => '$ ' + Math.round(n).toLocaleString('es-AR');
+  const $ = id => document.getElementById(id);
+  const checks = document.querySelectorAll('.svc input[type="checkbox"]');
+
+  function recalcular() {
+    let unico = 0, mensual = 0, alguno = false;
+
+    checks.forEach(chk => {
+      chk.closest('.svc').classList.toggle('is-on', chk.checked);
+      if (!chk.checked) return;
+      alguno = true;
+      const precio = Number(chk.dataset.price) || 0;
+      if (chk.dataset.billing === 'mensual') mensual += precio;
+      else unico += precio;
+    });
+
+    document.querySelectorAll('.svc-group').forEach(g => {
+      g.classList.toggle('has-on', !!g.querySelector('input[type="checkbox"]:checked'));
+    });
+    document.body.classList.toggle('has-selection', alguno);
+
+    $('t-total').textContent = fmt(unico);
+    $('t-transf').textContent = fmt(unico * 0.9);
+    $('t-sena-mp').textContent = fmt(unico * 0.5);
+    $('t-sena-tr').textContent = fmt(unico * 0.9 * 0.5);
+    $('row-mensual').hidden = mensual === 0;
+    $('t-mensual').textContent = fmt(mensual) + ' / mes';
+  }
+
+  // Un solo plan de desarrollo y un solo plan mensual a la vez
+  checks.forEach(chk => {
+    chk.addEventListener('change', () => {
+      const grupo = chk.dataset.exclusive;
+      if (grupo && chk.checked) {
+        document.querySelectorAll(`input[data-exclusive="${grupo}"]`).forEach(o => { if (o !== chk) o.checked = false; });
+      }
+      if (chk.checked && chk.closest('[data-custom]')) {
+        const inp = document.querySelector(`[data-price-for="${chk.id}"]`);
+        if (inp && !inp.value) inp.focus();
+      }
+      recalcular();
+    });
+  });
+
+  // Servicios con precio a cotizar
+  document.querySelectorAll('[data-price-for]').forEach(inp => {
+    const chk = $(inp.dataset.priceFor);
+    const display = document.querySelector(`[data-display-for="${chk.id}"]`);
+    const warn = document.querySelector(`[data-warn-for="${chk.id}"]`);
+    const minimo = Number(chk.dataset.min) || 0;
+
+    inp.addEventListener('input', () => {
+      const val = Number(inp.value) || 0;
+      chk.dataset.price = val;
+      display.textContent = val > 0 ? fmt(val) : display.dataset.base;
+      if (val > 0) chk.checked = true;
+      if (warn) warn.classList.toggle('show', val > 0 && val < minimo);
+      recalcular();
+    });
+  });
+
+  // Nombre en la firma, número y fecha en el pie
+  $('cliente-nombre').addEventListener('input', e => { $('sig-cliente').textContent = e.target.value; });
+  $('docnum').addEventListener('input', e => { $('foot-docnum').textContent = e.target.value || 'MRS-0001'; });
+  $('fecha').addEventListener('input', e => {
+    $('foot-fecha').textContent = e.target.value ? e.target.value.split('-').reverse().join('/') : '';
+  });
+
+  function fechaHoy() {
+    const d = new Date();
+    $('fecha').value = [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-');
+    $('fecha').dispatchEvent(new Event('input'));
+  }
+
+  $('btn-limpiar').addEventListener('click', () => {
+    if (!confirm('¿Borrar todos los datos del documento?')) return;
+    document.querySelectorAll('input:not([type="checkbox"]):not([type="date"])').forEach(i => i.value = '');
+    checks.forEach(c => { c.checked = false; if (c.closest('[data-custom]')) c.dataset.price = 0; });
+    document.querySelectorAll('[data-display-for]').forEach(d => d.textContent = d.dataset.base);
+    document.querySelectorAll('.svc-warn').forEach(w => w.classList.remove('show'));
+    $('sig-cliente').textContent = '';
+    $('foot-docnum').textContent = 'MRS-0001';
+    fechaHoy();
+    recalcular();
+  });
+
+  fechaHoy();
+  recalcular();
+</script>
+</body>
+</html>
