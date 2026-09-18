@@ -110,7 +110,10 @@ servidor. Es un poquito más de trabajo de setup, pero queda prolijo y seguro.
 - [x] **C3.** **`presupuesto.html`**: candado (solo admin), selector de cliente y
       botón **"Guardar y numerar"** que asigna el N° automático y guarda en la base. ✅
 - [x] **C4.** Código de la **Edge Function `crear-cliente`** → `supabase/functions/crear-cliente/index.ts`. ✅
-- [ ] **C5.** (Fase 2) Crear **`portal.html`** para los clientes.
+- [x] **C5.** **`portal.html`** para clientes (login + presupuestos, contratado y saldo). ✅
+- [x] **C6.** Extras: editar cliente desde el panel, "Ver / PDF" para re-exportar un
+      presupuesto guardado, botón "Volver al panel" en el presupuesto, y botón
+      "Iniciar sesión" en el nav de `index.html` y `planes.html`. ✅
 
 > El código de la Fase 1 ya está en el repo. Falta que hagas tu parte en Supabase
 > (T3 a T6) para que empiece a funcionar. Detalle del despliegue de la función en
@@ -298,11 +301,16 @@ Si algo falla, copiame el mensaje de error que aparezca y lo resolvemos.
 
 ---
 
-## 10. Qué queda para la Fase 2 (portal del cliente)
+## 10. Estado de la Fase 2 (portal del cliente)
 
-- `portal.html`: login del cliente → ve sus documentos, estado y saldo.
-- Que el admin registre **pagos** y actualice estados desde el panel.
-- (Opcional) que el saldo se recalcule solo restando pagos al total.
+- [x] `portal.html`: el cliente inicia sesión y ve sus presupuestos, lo contratado
+      y su saldo pendiente. El login del nav enruta solo: admin → panel, cliente → portal.
+- [ ] Que el admin **registre pagos** y **cambie el estado** de un presupuesto desde el panel.
+- [ ] Que el **saldo se recalcule solo** restando los pagos al total.
+- [ ] (Opcional) Marcar la seña como pagada y avisar por email/WhatsApp.
+
+> Lo que sigue: la pantalla del admin para cargar pagos y estados. Cuando eso esté,
+> el "Saldo pendiente" del portal del cliente se actualiza solo.
 
 ---
 
