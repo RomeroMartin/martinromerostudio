@@ -41,6 +41,12 @@
   .btn-primary { background: var(--acento); border-color: var(--acento); color: #fff; }
   .btn-primary:hover { background: #3360b3; }
   .btn:disabled { opacity: 0.5; cursor: default; }
+  a.btn { text-decoration: none; display: inline-flex; align-items: center; }
+  .btn-mini { font-size: 0.72rem; padding: 0.35rem 0.7rem; }
+
+  .modal { position: fixed; inset: 0; z-index: 500; background: rgba(14,18,23,0.55); display: none; place-items: center; padding: 1.5rem; }
+  .modal.open { display: grid; }
+  .modal-card { width: 100%; max-width: 460px; background: var(--blanco); border-radius: 14px; padding: 1.5rem 1.6rem; max-height: 90vh; overflow: auto; }
 
   .isologo { display: flex; align-items: center; gap: 0.6rem; }
   .isologo-text { display: flex; flex-direction: column; line-height: 1.05; }
@@ -182,6 +188,26 @@
   </div>
 </div>
 
+<!-- Modal editar cliente -->
+<div id="modal-cliente" class="modal">
+  <div class="modal-card">
+    <div class="card-head"><h2>Editar cliente</h2></div>
+    <form class="grid2" id="form-editar">
+      <input type="hidden" id="e-id">
+      <div class="field full"><label class="label">Nombre / razón social</label><input type="text" id="e-nombre"></div>
+      <div class="field full"><label class="label">Email (no editable)</label><input type="email" id="e-email" class="mono" disabled></div>
+      <div class="field"><label class="label">Teléfono / WhatsApp</label><input type="tel" id="e-tel" class="mono"></div>
+      <div class="field"><label class="label">CUIT / DNI</label><input type="text" id="e-doc" class="mono"></div>
+      <div class="field full"><label class="label">Domicilio</label><input type="text" id="e-dir"></div>
+      <div class="msg full" id="edit-msg"></div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="e-guardar">Guardar cambios</button>
+        <button class="btn" type="button" id="e-cancelar">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script type="module">
   import { db, perfilActual, formatoDoc } from './assets/supabase.js';
 
@@ -199,6 +225,10 @@
   async function verificarSesion() {
     const perfil = await perfilActual();
     if (!perfil) return mostrarLogin();
+    if (perfil.rol === 'cliente') {        // un cliente va a su portal
+      location.replace('portal.html');
+      return;
+    }
     if (perfil.rol !== 'admin') {
       await db.auth.signOut();
       return mostrarLogin('Esta cuenta no tiene permisos de administrador.');
@@ -271,34 +301,71 @@
   });
 
   // ── Cargar clientes ─────────────────────────────────
+  let clientesCache = [];
   async function cargarClientes() {
     const { data, error } = await db
       .from('profiles')
-      .select('id, nombre, email, telefono, cuit_dni, creado_en')
+      .select('id, nombre, email, telefono, cuit_dni, domicilio, creado_en')
       .eq('rol', 'cliente')
       .order('creado_en', { ascending: false });
 
     const cont = $('clientes-tabla');
     if (error) { cont.innerHTML = `<p class="empty">Error al cargar: ${esc(error.message)}</p>`; return; }
+    clientesCache = data;
     $('clientes-count').textContent = (data.length || 0) + ' en total';
     if (!data.length) { cont.innerHTML = '<p class="empty">Todavía no hay clientes cargados.</p>'; return; }
 
     cont.innerHTML = `<table><thead><tr>
-        <th>Nombre</th><th>Email</th><th>Tel.</th><th>CUIT/DNI</th><th>Alta</th>
+        <th>Nombre</th><th>Email</th><th>Tel.</th><th>CUIT/DNI</th><th>Alta</th><th></th>
       </tr></thead><tbody>${data.map(c => `<tr>
         <td>${esc(c.nombre) || '<span class="muted">—</span>'}</td>
         <td class="num">${esc(c.email)}</td>
         <td class="num">${esc(c.telefono) || '<span class="muted">—</span>'}</td>
         <td class="num">${esc(c.cuit_dni) || '<span class="muted">—</span>'}</td>
         <td class="num muted">${c.creado_en ? new Date(c.creado_en).toLocaleDateString('es-AR') : ''}</td>
+        <td><button class="btn btn-mini" type="button" data-edit="${c.id}">Editar</button></td>
       </tr>`).join('')}</tbody></table>`;
   }
+
+  // ── Editar cliente ──────────────────────────────────
+  $('clientes-tabla').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-edit]');
+    if (!btn) return;
+    const c = clientesCache.find(x => x.id === btn.dataset.edit);
+    if (!c) return;
+    $('e-id').value = c.id;
+    $('e-nombre').value = c.nombre || '';
+    $('e-email').value = c.email || '';
+    $('e-tel').value = c.telefono || '';
+    $('e-doc').value = c.cuit_dni || '';
+    $('e-dir').value = c.domicilio || '';
+    hideMsg($('edit-msg'));
+    $('modal-cliente').classList.add('open');
+  });
+
+  $('e-cancelar').addEventListener('click', () => $('modal-cliente').classList.remove('open'));
+  $('modal-cliente').addEventListener('click', (e) => { if (e.target.id === 'modal-cliente') $('modal-cliente').classList.remove('open'); });
+
+  $('form-editar').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('e-guardar').disabled = true;
+    const { error } = await db.from('profiles').update({
+      nombre: $('e-nombre').value.trim() || null,
+      telefono: $('e-tel').value.trim() || null,
+      cuit_dni: $('e-doc').value.trim() || null,
+      domicilio: $('e-dir').value.trim() || null,
+    }).eq('id', $('e-id').value);
+    $('e-guardar').disabled = false;
+    if (error) return showMsg($('edit-msg'), 'err', 'Error: ' + error.message);
+    $('modal-cliente').classList.remove('open');
+    cargarClientes();
+  });
 
   // ── Cargar presupuestos ─────────────────────────────
   async function cargarDocumentos() {
     const { data, error } = await db
       .from('documentos')
-      .select('numero, fecha, estado, total_unico, total_mensual, saldo, cliente:profiles!documentos_cliente_id_fkey(nombre)')
+      .select('id, numero, fecha, estado, total_unico, total_mensual, saldo, cliente:profiles!documentos_cliente_id_fkey(nombre)')
       .order('numero', { ascending: false })
       .limit(50);
 
@@ -308,7 +375,7 @@
     if (!data.length) { cont.innerHTML = '<p class="empty">Todavía no se generó ningún presupuesto.</p>'; return; }
 
     cont.innerHTML = `<table><thead><tr>
-        <th>N°</th><th>Fecha</th><th>Cliente</th><th>Estado</th><th>Total</th><th>Saldo</th>
+        <th>N°</th><th>Fecha</th><th>Cliente</th><th>Estado</th><th>Total</th><th>Saldo</th><th></th>
       </tr></thead><tbody>${data.map(d => `<tr>
         <td class="num">${formatoDoc(d.numero)}</td>
         <td class="num muted">${d.fecha ? d.fecha.split('-').reverse().join('/') : ''}</td>
@@ -316,6 +383,7 @@
         <td><span class="badge b-${esc(d.estado)}">${esc(d.estado)}</span></td>
         <td class="num">${money(d.total_unico)}${Number(d.total_mensual) ? ' <span class="muted">+ ' + money(d.total_mensual) + '/m</span>' : ''}</td>
         <td class="num">${money(d.saldo)}</td>
+        <td><a class="btn btn-mini" href="presupuesto.html?doc=${d.id}" target="_blank" rel="noopener">Ver / PDF</a></td>
       </tr>`).join('')}</tbody></table>`;
   }
 

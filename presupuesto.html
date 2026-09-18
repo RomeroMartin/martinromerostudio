@@ -62,7 +62,8 @@
   .btn-primary { background: var(--acento); border-color: var(--acento); color: var(--blanco); }
   .btn-primary:hover { background: #3360b3; border-color: #3360b3; }
   .btn:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
-  .toolbar-left { display: flex; align-items: center; gap: 0.6rem; }
+  .toolbar-left { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  a.btn { text-decoration: none; display: inline-flex; align-items: center; }
   .tb-cliente { display: flex; align-items: center; gap: 0.5rem; }
   .tb-cliente .label { margin: 0; }
   #sel-cliente {
@@ -402,6 +403,7 @@
 
 <div class="toolbar">
   <div class="toolbar-left">
+    <a class="btn no-print" href="panel.html">← Panel</a>
     <label class="tb-cliente no-print">
       <span class="label">Cliente</span>
       <select id="sel-cliente"><option value="">— Sin asignar —</option></select>
@@ -447,10 +449,10 @@
 
     <section class="client" aria-label="Datos del cliente">
       <label class="field full"><span class="label">Nombre completo o razón social</span><input type="text" id="cliente-nombre" placeholder="Ej: Florería El Jardín / María González"></label>
-      <label class="field"><span class="label">CUIT / DNI</span><input type="text" class="mono" placeholder="20-12345678-9"></label>
-      <label class="field"><span class="label">Domicilio</span><input type="text" placeholder="Calle 123, La Plata"></label>
-      <label class="field"><span class="label">Email</span><input type="email" placeholder="cliente@email.com"></label>
-      <label class="field"><span class="label">Teléfono / WhatsApp</span><input type="tel" class="mono" placeholder="+54 9 221 000-0000"></label>
+      <label class="field"><span class="label">CUIT / DNI</span><input type="text" id="cliente-cuit" class="mono" placeholder="20-12345678-9"></label>
+      <label class="field"><span class="label">Domicilio</span><input type="text" id="cliente-domicilio" placeholder="Calle 123, La Plata"></label>
+      <label class="field"><span class="label">Email</span><input type="email" id="cliente-email" placeholder="cliente@email.com"></label>
+      <label class="field"><span class="label">Teléfono / WhatsApp</span><input type="tel" id="cliente-tel" class="mono" placeholder="+54 9 221 000-0000"></label>
     </section>
 
     <!-- 01 SERVICIOS -->
@@ -460,17 +462,17 @@
       <div class="svc-group">
         <div class="svc-group-head"><h3>Desarrollo web</h3><span>Pago único · un plan</span></div>
         <label class="svc">
-          <input type="checkbox" data-price="179000" data-exclusive="plan">
+          <input type="checkbox" data-id="plan-presencia" data-price="179000" data-exclusive="plan">
           <span><span class="svc-name">Plan Presencia</span><span class="svc-note">Landing page profesional, botón a WhatsApp, formulario, SEO básico, conexión con tu dominio y primer mes de soporte.</span></span>
           <span class="svc-price">$ 179.000</span>
         </label>
         <label class="svc">
-          <input type="checkbox" data-price="339000" data-exclusive="plan">
+          <input type="checkbox" data-id="plan-negocio" data-price="339000" data-exclusive="plan">
           <span><span class="svc-name">Plan Negocio</span><span class="svc-note">Todo lo del Plan Presencia, hasta 5 secciones, galería, mapa, Google Business con reseñas y SEO local.</span></span>
           <span class="svc-price">$ 339.000</span>
         </label>
         <label class="svc">
-          <input type="checkbox" data-price="549000" data-exclusive="plan">
+          <input type="checkbox" data-id="plan-catalogo" data-price="549000" data-exclusive="plan">
           <span><span class="svc-name">Plan Catálogo Smart</span><span class="svc-note">Todo lo del Plan Negocio, catálogo autogestionable con panel propio, carrito a WhatsApp, filtros y buscador. Carga inicial de hasta 30 artículos.</span></span>
           <span class="svc-price">$ 549.000</span>
         </label>
@@ -479,7 +481,7 @@
       <div class="svc-group">
         <div class="svc-group-head"><h3>WebApps y sistemas a medida</h3><span>Pago único · según complejidad</span></div>
         <div class="svc" data-custom>
-          <input type="checkbox" id="chk-webapp" data-price="0" data-min="599000">
+          <input type="checkbox" id="chk-webapp" data-id="webapp" data-price="0" data-min="599000">
           <span>
             <span class="svc-name">WebApp a medida</span>
             <input type="text" class="input-desc" placeholder="Describí el sistema (ej: control de stock y proveedores)">
@@ -493,32 +495,32 @@
       <div class="svc-group">
         <div class="svc-group-head"><h3>Adicionales</h3><span>Pago único</span></div>
         <label class="svc">
-          <input type="checkbox" data-price="22000">
+          <input type="checkbox" data-id="dominio" data-price="22000">
           <span><span class="svc-name">Gestión de dominio .com.ar</span><span class="svc-note">Trámite completo en NIC.ar, registrado a nombre y CUIT del cliente.</span></span>
           <span class="svc-price">$ 22.000</span>
         </label>
         <label class="svc">
-          <input type="checkbox" data-price="85000">
+          <input type="checkbox" data-id="bilingue" data-price="85000">
           <span><span class="svc-name">Sitio en dos idiomas</span><span class="svc-note">Versión completa en inglés con botón de cambio de idioma.</span></span>
           <span class="svc-price">$ 85.000</span>
         </label>
         <label class="svc">
-          <input type="checkbox" data-price="35000">
+          <input type="checkbox" data-id="seccion-extra" data-price="35000">
           <span><span class="svc-name">Sección adicional estática</span><span class="svc-note">Nueva página o sección con el mismo diseño del sitio.</span></span>
           <span class="svc-price">$ 35.000</span>
         </label>
         <label class="svc">
-          <input type="checkbox" data-price="75000">
+          <input type="checkbox" data-id="express" data-price="75000">
           <span><span class="svc-name">Entrega express</span><span class="svc-note">Desarrollo prioritario en 48 a 72 horas.</span></span>
           <span class="svc-price">$ 75.000</span>
         </label>
         <label class="svc">
-          <input type="checkbox" data-price="65000">
+          <input type="checkbox" data-id="perfil-google" data-price="65000">
           <span><span class="svc-name">Creación y optimización de Perfil de Google</span><span class="svc-note">Perfil de Google Business desde cero: categorías, horarios, descripción, fotos y estrategia de reseñas.</span></span>
           <span class="svc-price">$ 65.000</span>
         </label>
         <div class="svc" data-custom>
-          <input type="checkbox" id="chk-modulo" data-price="0" data-min="45000">
+          <input type="checkbox" id="chk-modulo" data-id="modulo" data-price="0" data-min="45000">
           <span>
             <span class="svc-name">Sección o módulo interactivo</span>
             <input type="text" class="input-desc" placeholder="Ej: calculadora de presupuesto, simulador de cuotas">
@@ -528,7 +530,7 @@
           <span class="svc-price" data-display-for="chk-modulo" data-base="Desde $ 45.000">Desde $ 45.000</span>
         </div>
         <div class="svc" data-custom>
-          <input type="checkbox" id="chk-otro" data-price="0">
+          <input type="checkbox" id="chk-otro" data-id="otro" data-price="0">
           <span>
             <input type="text" placeholder="Otro servicio acordado">
             <span class="svc-input no-print"><span>$</span><input type="number" min="0" step="1000" data-price-for="chk-otro" placeholder="0"></span>
@@ -540,12 +542,12 @@
       <div class="svc-group">
         <div class="svc-group-head"><h3>Planes mensuales</h3><span>Opcional · suscripción por MercadoPago</span></div>
         <label class="svc">
-          <input type="checkbox" data-price="18000" data-billing="mensual" data-exclusive="mensual">
+          <input type="checkbox" data-id="mant-base" data-price="18000" data-billing="mensual" data-exclusive="mensual">
           <span><span class="svc-name">Mantenimiento &amp; Base</span><span class="svc-note">Infraestructura cloud, SSL, gestión y renovación del dominio, monitoreo 24/7 y soporte técnico general.</span></span>
           <span class="svc-price">$ 18.000 <small>/ mes</small></span>
         </label>
         <label class="svc">
-          <input type="checkbox" data-price="38000" data-billing="mensual" data-exclusive="mensual">
+          <input type="checkbox" data-id="partner-full" data-price="38000" data-billing="mensual" data-exclusive="mensual">
           <span><span class="svc-name">Partner Digital Full</span><span class="svc-note">Todo Mantenimiento &amp; Base, hasta 4 actualizaciones de contenido por mes y atención prioritaria por WhatsApp.</span></span>
           <span class="svc-price">$ 38.000 <small>/ mes</small></span>
         </label>
@@ -762,30 +764,85 @@
     perfilAdmin = perfil;
     $('gate').remove();          // acceso concedido
     await cargarClientes();
+    const docId = new URLSearchParams(location.search).get('doc');
+    if (docId) await cargarDocumento(docId);
   }
 
   // ── Selector de clientes ─────────────────────────────
+  let clientesCache = [];
+
+  function completarCliente(c) {
+    if (!c) return;
+    $('cliente-nombre').value = c.nombre || '';
+    $('cliente-nombre').dispatchEvent(new Event('input'));
+    if ($('cliente-cuit')) $('cliente-cuit').value = c.cuit_dni || '';
+    if ($('cliente-domicilio')) $('cliente-domicilio').value = c.domicilio || '';
+    if ($('cliente-email')) $('cliente-email').value = c.email || '';
+    if ($('cliente-tel')) $('cliente-tel').value = c.telefono || '';
+  }
+
   async function cargarClientes() {
     const { data, error } = await db
-      .from('profiles').select('id, nombre, email')
+      .from('profiles').select('id, nombre, email, telefono, cuit_dni, domicilio')
       .eq('rol', 'cliente').order('nombre', { ascending: true });
     if (error || !data) return;
+    clientesCache = data;
     const sel = $('sel-cliente');
     data.forEach(c => {
       const o = document.createElement('option');
       o.value = c.id;
       o.textContent = c.nombre || c.email;
-      o.dataset.nombre = c.nombre || '';
       sel.appendChild(o);
     });
     sel.addEventListener('change', () => {
-      if (!sel.value) return;
-      const nombre = sel.selectedOptions[0].dataset.nombre;
-      if (nombre) {
-        $('cliente-nombre').value = nombre;
-        $('cliente-nombre').dispatchEvent(new Event('input'));
+      completarCliente(clientesCache.find(c => c.id === sel.value));
+    });
+  }
+
+  // ── Cargar un presupuesto guardado (?doc=ID) para re-exportar ──
+  async function cargarDocumento(id) {
+    const { data: doc, error } = await db
+      .from('documentos').select('*').eq('id', id).single();
+    if (error || !doc) return;
+
+    // Cabecera
+    if (doc.fecha) { $('fecha').value = doc.fecha; $('fecha').dispatchEvent(new Event('input')); }
+    const num = formatoDoc(doc.numero);
+    $('docnum').value = num;
+    $('foot-docnum').textContent = num;
+
+    // Cliente
+    if (doc.cliente_id) {
+      $('sel-cliente').value = doc.cliente_id;
+      completarCliente(clientesCache.find(c => c.id === doc.cliente_id));
+    }
+
+    // Servicios: reconstruir marcando cada uno por su id (o por nombre si es viejo)
+    (doc.items || []).forEach(item => {
+      let chk = item.id ? document.querySelector(`.svc input[data-id="${item.id}"]`) : null;
+      if (!chk) {
+        chk = [...document.querySelectorAll('.svc .svc-name')]
+          .find(n => n.textContent.trim() === item.nombre)?.closest('.svc')?.querySelector('input[type="checkbox"]');
+      }
+      if (!chk) return;
+      const precioInput = document.querySelector(`[data-price-for="${chk.id}"]`);
+      if (precioInput) {                       // servicio a cotizar
+        const descInput = chk.closest('.svc').querySelector('input[type="text"]');
+        const descTxt = item.desc || (chk.closest('.svc').querySelector('.svc-name') ? '' : item.nombre);
+        if (descInput && descTxt) descInput.value = descTxt;
+        precioInput.value = item.precio || 0;
+        precioInput.dispatchEvent(new Event('input'));
+      } else {
+        chk.checked = true;
+        chk.dispatchEvent(new Event('change'));
       }
     });
+
+    // Modo "solo ver / re-exportar": ya está numerado
+    const btn = $('btn-guardar');
+    btn.disabled = true;
+    btn.textContent = 'Ya guardado';
+    mensaje('Presupuesto ' + num + ' cargado. Podés exportarlo a PDF.');
   }
 
   // ── Guardar y numerar ────────────────────────────────
@@ -800,12 +857,11 @@
     let unico = 0, mensual = 0;
     document.querySelectorAll('.svc input[type="checkbox"]:checked').forEach(chk => {
       const svc = chk.closest('.svc');
-      const nombre = (svc.querySelector('.svc-name')?.textContent
-        || svc.querySelector('input[type="text"]')?.value
-        || 'Servicio').trim();
+      const desc = (svc.querySelector('input[type="text"]')?.value || '').trim();
+      const nombre = (svc.querySelector('.svc-name')?.textContent || desc || 'Servicio').trim();
       const precio = Number(chk.dataset.price) || 0;
       const billing = chk.dataset.billing === 'mensual' ? 'mensual' : 'unico';
-      items.push({ nombre, precio, billing });
+      items.push({ id: chk.dataset.id || null, nombre, desc, precio, billing });
       if (billing === 'mensual') mensual += precio; else unico += precio;
     });
     return { items, unico, mensual };

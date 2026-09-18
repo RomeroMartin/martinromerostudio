@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi cuenta · Martin Romero Studio</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="logo/favicon.svg">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --acento: #3d6bc4; --acento-claro: #7fb2e8;
+    --tinta: #12161c; --oscuro: #0e1217; --claro: #f2f4f6;
+    --linea: #e0e4e9; --gris: #5c6672; --gris-2: #8b95a2; --blanco: #ffffff;
+    --alerta: #a03a3a; --ok: #2f7a4d;
+    --sans: 'Archivo', system-ui, sans-serif; --mono: 'Spline Sans Mono', ui-monospace, monospace;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--sans); background: var(--claro); color: var(--tinta); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+
+  .label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gris-2); display: block; margin-bottom: 0.3rem; }
+  input { font-family: var(--sans); font-size: 0.9rem; color: var(--tinta); background: var(--blanco); border: 1px solid var(--linea); padding: 0.55rem 0.7rem; width: 100%; border-radius: 8px; }
+  input:focus { outline: 2px solid var(--acento); outline-offset: 1px; border-color: var(--acento); }
+  .btn { font-family: var(--sans); font-size: 0.85rem; font-weight: 600; padding: 0.6rem 1.1rem; border-radius: 8px; border: 1px solid var(--linea); background: var(--blanco); color: var(--tinta); cursor: pointer; }
+  .btn:hover { border-color: var(--gris-2); }
+  .btn-primary { background: var(--acento); border-color: var(--acento); color: #fff; }
+  .btn-primary:hover { background: #3360b3; }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  a.btn { text-decoration: none; display: inline-flex; align-items: center; }
+
+  .isologo { display: flex; align-items: center; gap: 0.6rem; }
+  .isologo-text { display: flex; flex-direction: column; line-height: 1.05; }
+  .isologo-name { font-size: 1rem; font-weight: 600; letter-spacing: -0.03em; }
+  .isologo-sub { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--acento); }
+
+  /* Login */
+  .login-wrap { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; }
+  .login-card { width: 100%; max-width: 380px; background: var(--blanco); border: 1px solid var(--linea); border-radius: 14px; overflow: hidden; }
+  .login-head { background: var(--oscuro); color: #eceff3; padding: 1.6rem 1.8rem; }
+  .login-head .isologo-name { color: #fff; }
+  .login-head h1 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.03em; margin-top: 1rem; }
+  .login-head p { font-size: 0.8rem; color: var(--gris-2); margin-top: 0.2rem; }
+  .login-body { padding: 1.6rem 1.8rem 1.9rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  /* App */
+  .topbar { background: var(--oscuro); color: #eceff3; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .topbar .isologo-name { color: #fff; }
+  .topbar-right { display: flex; align-items: center; gap: 0.9rem; font-size: 0.8rem; color: var(--gris-2); }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1.6rem 1.2rem 4rem; display: flex; flex-direction: column; gap: 1.4rem; }
+
+  .hola { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em; }
+  .hola small { display: block; font-size: 0.85rem; font-weight: 400; color: var(--gris); margin-top: 0.2rem; }
+
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .kpi { background: var(--blanco); border: 1px solid var(--linea); border-radius: 12px; padding: 1.1rem 1.2rem; }
+  .kpi .label { margin-bottom: 0.5rem; }
+  .kpi .val { font-family: var(--mono); font-size: 1.35rem; font-weight: 500; }
+  .kpi.saldo .val { color: var(--alerta); }
+  .kpi.saldo.cero .val { color: var(--ok); }
+
+  .card { background: var(--blanco); border: 1px solid var(--linea); border-radius: 12px; padding: 1.4rem 1.5rem; }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+  .card-head h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; }
+
+  .doc { border: 1px solid var(--linea); border-radius: 10px; padding: 1rem 1.15rem; margin-bottom: 0.9rem; }
+  .doc:last-child { margin-bottom: 0; }
+  .doc-top { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.7rem; }
+  .doc-num { font-family: var(--mono); font-weight: 500; }
+  .doc-fecha { font-family: var(--mono); font-size: 0.75rem; color: var(--gris-2); }
+  .doc-items { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; margin: 0.5rem 0 0.8rem; }
+  .doc-items li { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.85rem; }
+  .doc-items li span:last-child { font-family: var(--mono); color: var(--gris); white-space: nowrap; }
+  .doc-tot { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--linea); padding-top: 0.6rem; font-size: 0.9rem; }
+  .doc-tot .num { font-family: var(--mono); font-weight: 500; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gris-2); text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--linea); }
+  td { padding: 0.6rem 0.6rem; border-bottom: 1px solid var(--linea); }
+  tr:last-child td { border-bottom: none; }
+  .num { font-family: var(--mono); }
+  .muted { color: var(--gris-2); }
+  .empty { color: var(--gris-2); font-size: 0.85rem; padding: 0.4rem 0.2rem; }
+
+  .badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.18rem 0.5rem; border-radius: 20px; border: 1px solid var(--linea); color: var(--gris); white-space: nowrap; }
+  .badge.b-aceptado, .badge.b-entregado { color: var(--ok); border-color: #b7d8c4; background: #eef7f1; }
+  .badge.b-enviado, .badge.b-en_proceso { color: var(--acento); border-color: #bcd3f0; background: #eef3fb; }
+  .badge.b-cancelado { color: var(--alerta); border-color: #e2c2c2; background: #f9eeee; }
+
+  .msg { font-size: 0.82rem; padding: 0.6rem 0.8rem; border-radius: 8px; display: none; }
+  .msg.show { display: block; }
+  .msg.err { background: #f9eeee; color: var(--alerta); border: 1px solid #e2c2c2; }
+  .hidden { display: none !important; }
+
+  @media (max-width: 640px) { .kpis { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div id="login" class="login-wrap hidden">
+  <div class="login-card">
+    <div class="login-head">
+      <div class="isologo">
+        <svg width="34" height="34" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+        <span class="isologo-text"><span class="isologo-name">Martin Romero</span><span class="isologo-sub">studio</span></span>
+      </div>
+      <h1>Mi cuenta</h1>
+      <p>Ingresá con los datos que te dio el estudio.</p>
+    </div>
+    <form class="login-body" id="form-login">
+      <div><label class="label" for="login-email">Email</label><input type="email" id="login-email" autocomplete="username" required></div>
+      <div><label class="label" for="login-pass">Contraseña</label><input type="password" id="login-pass" autocomplete="current-password" required></div>
+      <div class="msg err" id="login-msg"></div>
+      <button class="btn btn-primary" type="submit" id="login-btn">Ingresar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════ APP ══════════ -->
+<div id="app" class="hidden">
+  <div class="topbar">
+    <div class="isologo">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+      <span class="isologo-text"><span class="isologo-name">Mi cuenta</span><span class="isologo-sub">studio</span></span>
+    </div>
+    <div class="topbar-right">
+      <span id="topbar-email"></span>
+      <button class="btn" id="btn-logout" type="button">Salir</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div>
+      <div class="hola" id="hola">Hola</div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><span class="label">Presupuestos</span><span class="val" id="kpi-docs">—</span></div>
+      <div class="kpi"><span class="label">Total contratado</span><span class="val" id="kpi-total">—</span></div>
+      <div class="kpi saldo" id="kpi-saldo-box"><span class="label">Saldo pendiente</span><span class="val" id="kpi-saldo">—</span></div>
+    </div>
+
+    <section class="card">
+      <div class="card-head"><h2>Mis presupuestos</h2></div>
+      <div id="docs"><p class="empty">Cargando…</p></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Pagos</h2></div>
+      <div id="pagos"><p class="empty">Cargando…</p></div>
+    </section>
+
+    <p class="empty">¿Alguna duda con tu cuenta? Escribinos por
+      <a href="https://wa.me/5492214358401" target="_blank" rel="noopener">WhatsApp</a>.</p>
+  </div>
+</div>
+
+<script type="module">
+  import { db, perfilActual, formatoDoc } from './assets/supabase.js';
+
+  const $ = id => document.getElementById(id);
+  const money = n => '$ ' + Math.round(Number(n) || 0).toLocaleString('es-AR');
+  const esc = s => (s == null ? '' : String(s)).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fechaAR = f => f ? f.split('-').reverse().join('/') : '';
+
+  function showMsg(el, texto) { el.classList.add('show'); el.textContent = texto; }
+
+  async function verificarSesion() {
+    const perfil = await perfilActual();
+    if (!perfil) return mostrarLogin();
+    if (perfil.rol === 'admin') { location.replace('panel.html'); return; }
+    mostrarApp(perfil);
+  }
+
+  function mostrarLogin(error) {
+    $('app').classList.add('hidden');
+    $('login').classList.remove('hidden');
+    if (error) showMsg($('login-msg'), error);
+  }
+
+  async function mostrarApp(perfil) {
+    $('login').classList.add('hidden');
+    $('app').classList.remove('hidden');
+    $('topbar-email').textContent = perfil.authEmail || '';
+    $('hola').innerHTML = 'Hola, ' + esc(perfil.nombre || perfil.authEmail) +
+      '<small>Acá ves tus presupuestos, lo contratado y tu saldo.</small>';
+    await Promise.all([cargarDocumentos(), cargarPagos()]);
+  }
+
+  $('form-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('login-msg').classList.remove('show');
+    $('login-btn').disabled = true;
+    $('login-btn').textContent = 'Ingresando…';
+    const { error } = await db.auth.signInWithPassword({
+      email: $('login-email').value.trim(),
+      password: $('login-pass').value,
+    });
+    $('login-btn').disabled = false;
+    $('login-btn').textContent = 'Ingresar';
+    if (error) return showMsg($('login-msg'), 'Email o contraseña incorrectos.');
+    verificarSesion();
+  });
+
+  $('btn-logout').addEventListener('click', async () => { await db.auth.signOut(); location.reload(); });
+
+  async function cargarDocumentos() {
+    const { data, error } = await db
+      .from('documentos')
+      .select('numero, fecha, estado, items, total_unico, total_mensual, saldo')
+      .order('numero', { ascending: false });
+
+    const cont = $('docs');
+    if (error) { cont.innerHTML = `<p class="empty">No se pudieron cargar tus presupuestos.</p>`; return; }
+
+    $('kpi-docs').textContent = data.length;
+    const totalContratado = data.reduce((s, d) => s + Number(d.total_unico || 0), 0);
+    const saldoTotal = data.reduce((s, d) => s + Number(d.saldo || 0), 0);
+    $('kpi-total').textContent = money(totalContratado);
+    $('kpi-saldo').textContent = money(saldoTotal);
+    $('kpi-saldo-box').classList.toggle('cero', saldoTotal === 0);
+
+    if (!data.length) { cont.innerHTML = '<p class="empty">Todavía no tenés presupuestos cargados.</p>'; return; }
+
+    cont.innerHTML = data.map(d => {
+      const items = (d.items || []).map(it => `<li><span>${esc(it.nombre)}${it.billing === 'mensual' ? ' <span class="muted">(mensual)</span>' : ''}</span><span>${money(it.precio)}</span></li>`).join('');
+      return `<div class="doc">
+        <div class="doc-top">
+          <span class="doc-num">${formatoDoc(d.numero)}</span>
+          <span class="badge b-${esc(d.estado)}">${esc(d.estado)}</span>
+          <span class="doc-fecha">${fechaAR(d.fecha)}</span>
+        </div>
+        <ul class="doc-items">${items || '<li class="muted">Sin ítems</li>'}</ul>
+        <div class="doc-tot"><span>Total</span><span class="num">${money(d.total_unico)}${Number(d.total_mensual) ? ' + ' + money(d.total_mensual) + '/mes' : ''}</span></div>
+        <div class="doc-tot"><span>Saldo pendiente</span><span class="num">${money(d.saldo)}</span></div>
+      </div>`;
+    }).join('');
+  }
+
+  async function cargarPagos() {
+    const { data, error } = await db
+      .from('pagos')
+      .select('monto, metodo, fecha, documento:documentos(numero)')
+      .order('fecha', { ascending: false });
+
+    const cont = $('pagos');
+    if (error) { cont.innerHTML = `<p class="empty">No se pudieron cargar los pagos.</p>`; return; }
+    if (!data.length) { cont.innerHTML = '<p class="empty">Todavía no hay pagos registrados.</p>'; return; }
+
+    cont.innerHTML = `<table><thead><tr><th>Fecha</th><th>Presupuesto</th><th>Método</th><th>Monto</th></tr></thead>
+      <tbody>${data.map(p => `<tr>
+        <td class="num muted">${fechaAR(p.fecha)}</td>
+        <td class="num">${p.documento ? formatoDoc(p.documento.numero) : '—'}</td>
+        <td>${esc(p.metodo) || '<span class="muted">—</span>'}</td>
+        <td class="num">${money(p.monto)}</td>
+      </tr>`).join('')}</tbody></table>`;
+  }
+
+  verificarSesion();
+</script>
+</body>
+</html>
