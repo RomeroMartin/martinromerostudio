@@ -191,7 +191,10 @@ nav.scrolled{box-shadow:0 2px 12px rgba(0,0,0,0.06);}
 .btn-sec:hover{border-color:var(--accent-light);color:var(--accent-light);transform:translateY(-2px);}
 /* ── FOOTER ── */
 footer{background:var(--dark);color:var(--dark-ink);padding:3rem 2rem;text-align:center;}
-.footer-logo{margin-bottom:1rem;display:flex;justify-content:center;}
+.footer-logo{margin-bottom:1rem;display:flex;justify-content:center;align-items:center;gap:0.55rem;}
+.footer-logo .fb{display:flex;flex-direction:column;line-height:1.05;text-align:left;}
+.footer-logo .fb-name{font-size:0.95rem;font-weight:600;letter-spacing:-0.02em;color:#eceff3;}
+.footer-logo .fb-sub{font-family:'Spline Sans Mono',monospace;font-size:0.55rem;letter-spacing:0.34em;color:#7fb2e8;}
 .footer-tagline{font-size:0.8rem;color:var(--dark-muted);font-weight:400;margin-bottom:1.5rem;}
 .footer-links{display:flex;justify-content:center;gap:2rem;list-style:none;margin-bottom:2rem;flex-wrap:wrap;}
 .footer-links a{text-decoration:none;font-size:0.75rem;color:var(--dark-muted);transition:color 0.2s;}
@@ -565,11 +568,8 @@ footer{background:var(--dark);color:var(--dark-ink);padding:3rem 2rem;text-align
 <!-- FOOTER -->
 <footer>
 <div class="footer-logo">
-<svg width="200" height="34" viewBox="0 0 240 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Martin Romero Studio">
-<g><rect x="0" y="5" width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="13" width="16" height="3" fill="#fff"/><rect x="7" y="13" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="13" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="13" width="3.5" height="8" fill="#fff"/></g>
-<text x="40" y="19" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="-0.3" fill="#eceff3">Martin Romero</text>
-<text x="40" y="31" font-family="'Spline Sans Mono', ui-monospace, monospace" font-size="8" letter-spacing="2.9" fill="#7fb2e8">STUDIO</text>
-</svg>
+<svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Martin Romero Studio"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+<span class="fb"><span class="fb-name">Martin Romero</span><span class="fb-sub">STUDIO</span></span>
 </div>
 <p class="footer-tagline">Presencia digital para negocios reales · La Plata, Buenos Aires</p>
 <ul class="footer-links">
