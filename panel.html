@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel · Martin Romero Studio</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="logo/favicon.svg">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --acento: #3d6bc4;
+    --acento-claro: #7fb2e8;
+    --tinta: #12161c;
+    --oscuro: #0e1217;
+    --claro: #f2f4f6;
+    --linea: #e0e4e9;
+    --gris: #5c6672;
+    --gris-2: #8b95a2;
+    --blanco: #ffffff;
+    --alerta: #a03a3a;
+    --ok: #2f7a4d;
+    --sans: 'Archivo', system-ui, sans-serif;
+    --mono: 'Spline Sans Mono', ui-monospace, monospace;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--sans); background: var(--claro); color: var(--tinta); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+
+  .label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gris-2); display: block; margin-bottom: 0.3rem; }
+  input, select {
+    font-family: var(--sans); font-size: 0.9rem; color: var(--tinta);
+    background: var(--blanco); border: 1px solid var(--linea);
+    padding: 0.55rem 0.7rem; width: 100%; border-radius: 8px;
+  }
+  input.mono { font-family: var(--mono); }
+  input:focus, select:focus { outline: 2px solid var(--acento); outline-offset: 1px; border-color: var(--acento); }
+
+  .btn { font-family: var(--sans); font-size: 0.85rem; font-weight: 600; padding: 0.6rem 1.1rem; border-radius: 8px; border: 1px solid var(--linea); background: var(--blanco); color: var(--tinta); cursor: pointer; }
+  .btn:hover { border-color: var(--gris-2); }
+  .btn-primary { background: var(--acento); border-color: var(--acento); color: #fff; }
+  .btn-primary:hover { background: #3360b3; }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+
+  .isologo { display: flex; align-items: center; gap: 0.6rem; }
+  .isologo-text { display: flex; flex-direction: column; line-height: 1.05; }
+  .isologo-name { font-size: 1rem; font-weight: 600; letter-spacing: -0.03em; }
+  .isologo-sub { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--acento); }
+
+  /* ── Login ── */
+  .login-wrap { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; }
+  .login-card { width: 100%; max-width: 380px; background: var(--blanco); border: 1px solid var(--linea); border-radius: 14px; overflow: hidden; }
+  .login-head { background: var(--oscuro); color: #eceff3; padding: 1.6rem 1.8rem; }
+  .login-head .isologo-name { color: #fff; }
+  .login-head h1 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.03em; margin-top: 1rem; }
+  .login-head p { font-size: 0.8rem; color: var(--gris-2); margin-top: 0.2rem; }
+  .login-body { padding: 1.6rem 1.8rem 1.9rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  /* ── App ── */
+  .topbar { background: var(--oscuro); color: #eceff3; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .topbar .isologo-name { color: #fff; }
+  .topbar-right { display: flex; align-items: center; gap: 0.9rem; font-size: 0.8rem; color: var(--gris-2); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 1.6rem 1.2rem 4rem; display: flex; flex-direction: column; gap: 1.4rem; }
+
+  .card { background: var(--blanco); border: 1px solid var(--linea); border-radius: 12px; padding: 1.4rem 1.5rem; }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+  .card-head h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; }
+  .card-head span { font-size: 0.78rem; color: var(--gris-2); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1rem; }
+  .field.full { grid-column: 1 / -1; }
+  .form-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 1rem; margin-top: 0.3rem; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gris-2); text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--linea); }
+  td { padding: 0.6rem 0.6rem; border-bottom: 1px solid var(--linea); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .num { font-family: var(--mono); }
+  .muted { color: var(--gris-2); }
+  .empty { color: var(--gris-2); font-size: 0.85rem; padding: 0.8rem 0.2rem; }
+
+  .badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.18rem 0.5rem; border-radius: 20px; border: 1px solid var(--linea); color: var(--gris); white-space: nowrap; }
+  .badge.b-aceptado, .badge.b-entregado { color: var(--ok); border-color: #b7d8c4; background: #eef7f1; }
+  .badge.b-enviado, .badge.b-en_proceso { color: var(--acento); border-color: #bcd3f0; background: #eef3fb; }
+  .badge.b-cancelado { color: var(--alerta); border-color: #e2c2c2; background: #f9eeee; }
+
+  .msg { font-size: 0.82rem; padding: 0.6rem 0.8rem; border-radius: 8px; display: none; }
+  .msg.show { display: block; }
+  .msg.err { background: #f9eeee; color: var(--alerta); border: 1px solid #e2c2c2; }
+  .msg.ok  { background: #eef7f1; color: var(--ok); border: 1px solid #b7d8c4; }
+
+  .hidden { display: none !important; }
+  .row-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  a.linkbtn { text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .grid2 { grid-template-columns: 1fr; }
+    table { font-size: 0.8rem; }
+    th, td { padding: 0.45rem 0.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div id="login" class="login-wrap">
+  <div class="login-card">
+    <div class="login-head">
+      <div class="isologo">
+        <svg width="34" height="34" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+        <span class="isologo-text"><span class="isologo-name">Martin Romero</span><span class="isologo-sub">studio</span></span>
+      </div>
+      <h1>Panel de administración</h1>
+      <p>Acceso exclusivo del estudio.</p>
+    </div>
+    <form class="login-body" id="form-login">
+      <div><label class="label" for="login-email">Email</label><input type="email" id="login-email" autocomplete="username" required></div>
+      <div><label class="label" for="login-pass">Contraseña</label><input type="password" id="login-pass" autocomplete="current-password" required></div>
+      <div class="msg err" id="login-msg"></div>
+      <button class="btn btn-primary" type="submit" id="login-btn">Ingresar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════ APP ══════════ -->
+<div id="app" class="hidden">
+  <div class="topbar">
+    <div class="isologo">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+      <span class="isologo-text"><span class="isologo-name">Panel</span><span class="isologo-sub">studio</span></span>
+    </div>
+    <div class="topbar-right">
+      <span id="topbar-email"></span>
+      <button class="btn" id="btn-logout" type="button">Salir</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="row-links">
+      <a class="btn btn-primary linkbtn" href="presupuesto.html">+ Nuevo presupuesto</a>
+    </div>
+
+    <!-- Nuevo cliente -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Nuevo cliente</h2>
+        <span>Se crea la cuenta y vos le pasás el acceso.</span>
+      </div>
+      <form class="grid2" id="form-cliente">
+        <div class="field"><label class="label">Nombre / razón social</label><input type="text" id="c-nombre" required></div>
+        <div class="field"><label class="label">Email (usuario)</label><input type="email" id="c-email" class="mono" required></div>
+        <div class="field"><label class="label">Contraseña temporal</label><input type="text" id="c-pass" class="mono" required minlength="6" placeholder="mínimo 6 caracteres"></div>
+        <div class="field"><label class="label">Teléfono / WhatsApp</label><input type="tel" id="c-tel" class="mono"></div>
+        <div class="field"><label class="label">CUIT / DNI</label><input type="text" id="c-doc" class="mono"></div>
+        <div class="field"><label class="label">Domicilio</label><input type="text" id="c-dir"></div>
+        <div class="msg full" id="cliente-msg"></div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" id="c-btn">Crear cuenta de cliente</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Clientes -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Clientes</h2>
+        <span id="clientes-count"></span>
+      </div>
+      <div id="clientes-tabla"><p class="empty">Cargando…</p></div>
+    </section>
+
+    <!-- Presupuestos -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Presupuestos</h2>
+        <span id="docs-count"></span>
+      </div>
+      <div id="docs-tabla"><p class="empty">Cargando…</p></div>
+    </section>
+
+  </div>
+</div>
+
+<script type="module">
+  import { db, perfilActual, formatoDoc } from './assets/supabase.js';
+
+  const $ = id => document.getElementById(id);
+  const money = n => '$ ' + Math.round(Number(n) || 0).toLocaleString('es-AR');
+  const esc = s => (s == null ? '' : String(s)).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  function showMsg(el, tipo, texto) {
+    el.className = 'msg full ' + tipo + ' show';
+    el.textContent = texto;
+  }
+  function hideMsg(el) { el.className = 'msg full'; }
+
+  // ── Sesión ──────────────────────────────────────────
+  async function verificarSesion() {
+    const perfil = await perfilActual();
+    if (!perfil) return mostrarLogin();
+    if (perfil.rol !== 'admin') {
+      await db.auth.signOut();
+      return mostrarLogin('Esta cuenta no tiene permisos de administrador.');
+    }
+    mostrarApp(perfil);
+  }
+
+  function mostrarLogin(error) {
+    $('app').classList.add('hidden');
+    $('login').classList.remove('hidden');
+    if (error) showMsg($('login-msg'), 'err', error);
+  }
+
+  async function mostrarApp(perfil) {
+    $('login').classList.add('hidden');
+    $('app').classList.remove('hidden');
+    $('topbar-email').textContent = perfil.authEmail || '';
+    await Promise.all([cargarClientes(), cargarDocumentos()]);
+  }
+
+  // ── Login form ──────────────────────────────────────
+  $('form-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideMsg($('login-msg'));
+    $('login-btn').disabled = true;
+    $('login-btn').textContent = 'Ingresando…';
+    const { error } = await db.auth.signInWithPassword({
+      email: $('login-email').value.trim(),
+      password: $('login-pass').value,
+    });
+    $('login-btn').disabled = false;
+    $('login-btn').textContent = 'Ingresar';
+    if (error) return showMsg($('login-msg'), 'err', 'Email o contraseña incorrectos.');
+    verificarSesion();
+  });
+
+  $('btn-logout').addEventListener('click', async () => {
+    await db.auth.signOut();
+    location.reload();
+  });
+
+  // ── Crear cliente (vía Edge Function) ───────────────
+  $('form-cliente').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideMsg($('cliente-msg'));
+    $('c-btn').disabled = true;
+    $('c-btn').textContent = 'Creando…';
+
+    const payload = {
+      nombre: $('c-nombre').value.trim(),
+      email: $('c-email').value.trim(),
+      password: $('c-pass').value,
+      telefono: $('c-tel').value.trim(),
+      cuit_dni: $('c-doc').value.trim(),
+      domicilio: $('c-dir').value.trim(),
+    };
+
+    const { data, error } = await db.functions.invoke('crear-cliente', { body: payload });
+
+    $('c-btn').disabled = false;
+    $('c-btn').textContent = 'Crear cuenta de cliente';
+
+    if (error || (data && data.error)) {
+      const detalle = (data && data.error) || error.message || 'No se pudo crear el cliente.';
+      return showMsg($('cliente-msg'), 'err', 'Error: ' + detalle);
+    }
+    showMsg($('cliente-msg'), 'ok', `Cliente creado. Pasale el acceso: ${payload.email} / ${payload.password}`);
+    $('form-cliente').reset();
+    cargarClientes();
+  });
+
+  // ── Cargar clientes ─────────────────────────────────
+  async function cargarClientes() {
+    const { data, error } = await db
+      .from('profiles')
+      .select('id, nombre, email, telefono, cuit_dni, creado_en')
+      .eq('rol', 'cliente')
+      .order('creado_en', { ascending: false });
+
+    const cont = $('clientes-tabla');
+    if (error) { cont.innerHTML = `<p class="empty">Error al cargar: ${esc(error.message)}</p>`; return; }
+    $('clientes-count').textContent = (data.length || 0) + ' en total';
+    if (!data.length) { cont.innerHTML = '<p class="empty">Todavía no hay clientes cargados.</p>'; return; }
+
+    cont.innerHTML = `<table><thead><tr>
+        <th>Nombre</th><th>Email</th><th>Tel.</th><th>CUIT/DNI</th><th>Alta</th>
+      </tr></thead><tbody>${data.map(c => `<tr>
+        <td>${esc(c.nombre) || '<span class="muted">—</span>'}</td>
+        <td class="num">${esc(c.email)}</td>
+        <td class="num">${esc(c.telefono) || '<span class="muted">—</span>'}</td>
+        <td class="num">${esc(c.cuit_dni) || '<span class="muted">—</span>'}</td>
+        <td class="num muted">${c.creado_en ? new Date(c.creado_en).toLocaleDateString('es-AR') : ''}</td>
+      </tr>`).join('')}</tbody></table>`;
+  }
+
+  // ── Cargar presupuestos ─────────────────────────────
+  async function cargarDocumentos() {
+    const { data, error } = await db
+      .from('documentos')
+      .select('numero, fecha, estado, total_unico, total_mensual, saldo, cliente:profiles!documentos_cliente_id_fkey(nombre)')
+      .order('numero', { ascending: false })
+      .limit(50);
+
+    const cont = $('docs-tabla');
+    if (error) { cont.innerHTML = `<p class="empty">Error al cargar: ${esc(error.message)}</p>`; return; }
+    $('docs-count').textContent = (data.length || 0) + ' recientes';
+    if (!data.length) { cont.innerHTML = '<p class="empty">Todavía no se generó ningún presupuesto.</p>'; return; }
+
+    cont.innerHTML = `<table><thead><tr>
+        <th>N°</th><th>Fecha</th><th>Cliente</th><th>Estado</th><th>Total</th><th>Saldo</th>
+      </tr></thead><tbody>${data.map(d => `<tr>
+        <td class="num">${formatoDoc(d.numero)}</td>
+        <td class="num muted">${d.fecha ? d.fecha.split('-').reverse().join('/') : ''}</td>
+        <td>${esc(d.cliente && d.cliente.nombre) || '<span class="muted">Sin asignar</span>'}</td>
+        <td><span class="badge b-${esc(d.estado)}">${esc(d.estado)}</span></td>
+        <td class="num">${money(d.total_unico)}${Number(d.total_mensual) ? ' <span class="muted">+ ' + money(d.total_mensual) + '/m</span>' : ''}</td>
+        <td class="num">${money(d.saldo)}</td>
+      </tr>`).join('')}</tbody></table>`;
+  }
+
+  verificarSesion();
+</script>
+</body>
+</html>

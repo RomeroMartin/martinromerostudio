@@ -104,14 +104,17 @@ servidor. Es un poquito más de trabajo de setup, pero queda prolijo y seguro.
 
 ### 🤖 Lo que hago YO (Claude) — en el código del repo
 
-- [ ] **C1.** Agregar un archivo de config con tu Project URL + anon key
-      (ej. `assets/supabase.js`).
-- [ ] **C2.** Crear **`panel.html`**: pantalla de login de admin + formulario para
-      dar de alta clientes + listado de clientes y de presupuestos.
-- [ ] **C3.** Modificar **`presupuesto.html`**: exigir sesión de admin para abrir,
-      traer el próximo N° de documento y **guardar** cada presupuesto en la base.
-- [ ] **C4.** Escribir el código de la **Edge Function `crear-cliente`**.
+- [x] **C1.** Config con tu Project URL + publishable key → `assets/supabase.js`. ✅
+- [x] **C2.** **`panel.html`**: login de admin + alta de clientes + listado de
+      clientes y de presupuestos. ✅
+- [x] **C3.** **`presupuesto.html`**: candado (solo admin), selector de cliente y
+      botón **"Guardar y numerar"** que asigna el N° automático y guarda en la base. ✅
+- [x] **C4.** Código de la **Edge Function `crear-cliente`** → `supabase/functions/crear-cliente/index.ts`. ✅
 - [ ] **C5.** (Fase 2) Crear **`portal.html`** para los clientes.
+
+> El código de la Fase 1 ya está en el repo. Falta que hagas tu parte en Supabase
+> (T3 a T6) para que empiece a funcionar. Detalle del despliegue de la función en
+> la sección 9.
 
 ---
 
@@ -246,7 +249,46 @@ on conflict (id) do update set rol = 'admin';
 
 ---
 
-## 7. Nota de costos y privacidad
+## 7. Desplegar la Edge Function `crear-cliente` (paso T6)
+
+El código ya está en el repo (`supabase/functions/crear-cliente/index.ts`). Para
+que el botón "Crear cuenta de cliente" del panel funcione, hay que desplegarlo.
+La forma más simple, **sin instalar nada**, es desde el dashboard:
+
+1. En Supabase, menú izquierdo → **Edge Functions**.
+2. Botón **Deploy a new function** → **Via Editor** (editor en el navegador).
+3. Nombre de la función: **`crear-cliente`** (exactamente así, con guion).
+4. Borrá el código de ejemplo y pegá **todo** el contenido de
+   `supabase/functions/crear-cliente/index.ts` de este repo.
+5. **Deploy**. Listo.
+
+> No hace falta cargar ninguna clave a mano: Supabase inyecta solo las variables
+> `SUPABASE_URL`, `SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY` dentro de la
+> función. La clave secreta vive ahí, nunca en el frontend.
+
+Si más adelante preferís la vía consola (Supabase CLI), es:
+`supabase functions deploy crear-cliente`. Pero con el editor del dashboard alcanza.
+
+---
+
+## 8. Cómo probar la Fase 1 (paso T7)
+
+Una vez hechos T3, T4, T5 (y T6 para el alta de clientes):
+
+1. Entrá a `panel.html` → iniciá sesión con tu usuario admin.
+2. Cargá un cliente de prueba en **"Nuevo cliente"**. Debería aparecer en la lista.
+3. Clic en **"+ Nuevo presupuesto"** → se abre `presupuesto.html` (si no estás
+   logueado, te frena el candado).
+4. Elegí el cliente en el selector, marcá servicios, y tocá **"Guardar y numerar"**:
+   el Doc. N° se completa solo (MRS-0001, MRS-0002…) y queda guardado.
+5. Volvé al panel: el presupuesto aparece en la tabla **"Presupuestos"**.
+6. **"Guardar como PDF"** sigue funcionando igual que antes.
+
+Si algo falla, copiame el mensaje de error que aparezca y lo resolvemos.
+
+---
+
+## 9. Nota de costos y privacidad
 
 - El plan **gratis** de Supabase alcanza de sobra para este volumen (clientes y
   presupuestos de un estudio). Sin tarjeta.
@@ -256,7 +298,7 @@ on conflict (id) do update set rol = 'admin';
 
 ---
 
-## 8. Qué queda para la Fase 2 (portal del cliente)
+## 10. Qué queda para la Fase 2 (portal del cliente)
 
 - `portal.html`: login del cliente → ve sus documentos, estado y saldo.
 - Que el admin registre **pagos** y actualice estados desde el panel.

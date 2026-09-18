@@ -61,7 +61,30 @@
   .btn:hover { border-color: var(--gris-2); }
   .btn-primary { background: var(--acento); border-color: var(--acento); color: var(--blanco); }
   .btn-primary:hover { background: #3360b3; border-color: #3360b3; }
-  .btn:focus-visible, input:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+  .btn:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+  .toolbar-left { display: flex; align-items: center; gap: 0.6rem; }
+  .tb-cliente { display: flex; align-items: center; gap: 0.5rem; }
+  .tb-cliente .label { margin: 0; }
+  #sel-cliente {
+    font-family: var(--sans); font-size: 0.82rem; color: var(--tinta);
+    background: var(--blanco); border: 1px solid var(--linea);
+    padding: 0.45rem 0.6rem; border-radius: 8px; max-width: 230px;
+  }
+  #guardar-msg { font-size: 0.78rem; font-weight: 600; color: var(--acento); }
+  #guardar-msg.err { color: var(--alerta); }
+
+  /* ───────── Candado de acceso ───────── */
+  #gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--claro); display: grid; place-items: center; padding: 1.5rem;
+  }
+  .gate-card {
+    background: var(--blanco); border: 1px solid var(--linea); border-radius: 14px;
+    padding: 2rem 2.2rem; text-align: center; max-width: 360px;
+  }
+  .gate-card .isologo { justify-content: center; margin-bottom: 1.1rem; }
+  .gate-card p { font-size: 0.9rem; color: var(--gris); margin-bottom: 1.2rem; }
+  .gate-card .btn { text-decoration: none; display: inline-block; }
 
   /* ───────── Hoja ───────── */
   .doc {
@@ -341,7 +364,7 @@
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     body { background: var(--blanco); padding: 0; }
-    .toolbar, .no-print, .svc-warn { display: none !important; }
+    .toolbar, .no-print, .svc-warn, #gate { display: none !important; }
     .doc { border: none; border-radius: 0; max-width: none; overflow: visible; }
     .doc-head { padding: 1.6rem 16mm 1.6rem; }
     .doc-body { padding: 1.6rem 16mm 0; }
@@ -366,10 +389,28 @@
 </head>
 <body>
 
+<!-- Candado: solo el admin logueado puede usar esta página -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="isologo">
+      <svg width="34" height="34" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+    </div>
+    <p id="gate-msg">Verificando acceso…</p>
+    <a class="btn btn-primary" href="panel.html" id="gate-link" style="display:none">Ir al panel para ingresar</a>
+  </div>
+</div>
+
 <div class="toolbar">
-  <p>Marcá los servicios y completá los datos. Al guardar como PDF solo aparecen los servicios seleccionados.</p>
+  <div class="toolbar-left">
+    <label class="tb-cliente no-print">
+      <span class="label">Cliente</span>
+      <select id="sel-cliente"><option value="">— Sin asignar —</option></select>
+    </label>
+  </div>
   <div class="toolbar-actions">
+    <span id="guardar-msg"></span>
     <button class="btn" type="button" id="btn-limpiar">Limpiar</button>
+    <button class="btn" type="button" id="btn-guardar">Guardar y numerar</button>
     <button class="btn btn-primary" type="button" onclick="window.print()">Guardar como PDF</button>
   </div>
 </div>
@@ -401,7 +442,7 @@
 
     <div class="meta">
       <label class="meta-item"><span class="label">Fecha</span><input type="date" id="fecha" class="mono"></label>
-      <label class="meta-item"><span class="label">Doc. N°</span><input type="text" id="docnum" class="mono" placeholder="MRS-0001"></label>
+      <label class="meta-item"><span class="label">Doc. N°</span><input type="text" id="docnum" class="mono" placeholder="Se asigna al guardar" readonly></label>
     </div>
 
     <section class="client" aria-label="Datos del cliente">
@@ -699,6 +740,107 @@
 
   fechaHoy();
   recalcular();
+</script>
+
+<!-- ───────── Supabase: candado de acceso + guardado numerado ───────── -->
+<script type="module">
+  import { db, perfilActual, formatoDoc } from './assets/supabase.js';
+
+  const $ = id => document.getElementById(id);
+  let perfilAdmin = null;
+
+  // ── Candado: solo admin ──────────────────────────────
+  async function verificarAcceso() {
+    const perfil = await perfilActual();
+    if (!perfil || perfil.rol !== 'admin') {
+      $('gate-msg').textContent = perfil
+        ? 'Esta cuenta no tiene permisos de administrador.'
+        : 'Necesitás iniciar sesión como administrador para usar esta página.';
+      $('gate-link').style.display = 'inline-block';
+      return;
+    }
+    perfilAdmin = perfil;
+    $('gate').remove();          // acceso concedido
+    await cargarClientes();
+  }
+
+  // ── Selector de clientes ─────────────────────────────
+  async function cargarClientes() {
+    const { data, error } = await db
+      .from('profiles').select('id, nombre, email')
+      .eq('rol', 'cliente').order('nombre', { ascending: true });
+    if (error || !data) return;
+    const sel = $('sel-cliente');
+    data.forEach(c => {
+      const o = document.createElement('option');
+      o.value = c.id;
+      o.textContent = c.nombre || c.email;
+      o.dataset.nombre = c.nombre || '';
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', () => {
+      if (!sel.value) return;
+      const nombre = sel.selectedOptions[0].dataset.nombre;
+      if (nombre) {
+        $('cliente-nombre').value = nombre;
+        $('cliente-nombre').dispatchEvent(new Event('input'));
+      }
+    });
+  }
+
+  // ── Guardar y numerar ────────────────────────────────
+  function mensaje(texto, esError = false) {
+    const el = $('guardar-msg');
+    el.textContent = texto;
+    el.classList.toggle('err', esError);
+  }
+
+  function recolectarItems() {
+    const items = [];
+    let unico = 0, mensual = 0;
+    document.querySelectorAll('.svc input[type="checkbox"]:checked').forEach(chk => {
+      const svc = chk.closest('.svc');
+      const nombre = (svc.querySelector('.svc-name')?.textContent
+        || svc.querySelector('input[type="text"]')?.value
+        || 'Servicio').trim();
+      const precio = Number(chk.dataset.price) || 0;
+      const billing = chk.dataset.billing === 'mensual' ? 'mensual' : 'unico';
+      items.push({ nombre, precio, billing });
+      if (billing === 'mensual') mensual += precio; else unico += precio;
+    });
+    return { items, unico, mensual };
+  }
+
+  $('btn-guardar').addEventListener('click', async () => {
+    if (!perfilAdmin) return;
+    const { items, unico, mensual } = recolectarItems();
+    if (!items.length) return mensaje('Seleccioná al menos un servicio.', true);
+
+    $('btn-guardar').disabled = true;
+    mensaje('Guardando…');
+
+    const { data, error } = await db.from('documentos').insert({
+      cliente_id: $('sel-cliente').value || null,
+      fecha: $('fecha').value || null,
+      items,
+      total_unico: unico,
+      total_mensual: mensual,
+      estado: 'borrador',
+      saldo: unico,
+      creado_por: perfilAdmin.id,
+    }).select('numero').single();
+
+    $('btn-guardar').disabled = false;
+
+    if (error) return mensaje('Error al guardar: ' + error.message, true);
+
+    const num = formatoDoc(data.numero);
+    $('docnum').value = num;
+    $('foot-docnum').textContent = num;
+    mensaje('Guardado como ' + num + ' ✓');
+  });
+
+  verificarAcceso();
 </script>
 </body>
 </html>
