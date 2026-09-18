@@ -811,11 +811,9 @@
     $('docnum').value = num;
     $('foot-docnum').textContent = num;
 
-    // Cliente
-    if (doc.cliente_id) {
-      $('sel-cliente').value = doc.cliente_id;
-      completarCliente(clientesCache.find(c => c.id === doc.cliente_id));
-    }
+    // Cliente: primero la "foto" guardada; si no hay, el perfil registrado
+    if (doc.cliente_id) $('sel-cliente').value = doc.cliente_id;
+    completarCliente(doc.cliente_datos || clientesCache.find(c => c.id === doc.cliente_id));
 
     // Servicios: reconstruir marcando cada uno por su id (o por nombre si es viejo)
     (doc.items || []).forEach(item => {
@@ -875,8 +873,18 @@
     $('btn-guardar').disabled = true;
     mensaje('Guardando…');
 
+    // "Foto" de los datos del cliente (sirve igual para un potencial cliente sin cuenta)
+    const cliente_datos = {
+      nombre: $('cliente-nombre').value.trim(),
+      cuit_dni: $('cliente-cuit').value.trim(),
+      domicilio: $('cliente-domicilio').value.trim(),
+      email: $('cliente-email').value.trim(),
+      telefono: $('cliente-tel').value.trim(),
+    };
+
     const { data, error } = await db.from('documentos').insert({
       cliente_id: $('sel-cliente').value || null,
+      cliente_datos,
       fecha: $('fecha').value || null,
       items,
       total_unico: unico,
