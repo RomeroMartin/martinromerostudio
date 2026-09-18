@@ -228,7 +228,7 @@ footer{background:var(--dark);color:var(--dark-ink);padding:3rem 2rem;text-align
 <li><a href="index.html#resenas">Reseñas</a></li>
 <li><a href="planes.html" class="active">Planes</a></li>
 <li><a href="index.html#contacto">Contacto</a></li>
-<li><a href="portal.html">Iniciar sesión</a></li>
+<li><a href="portal.html" id="nav-login">Iniciar sesión</a></li>
 <li><a href="https://wa.me/5492214358401" target="_blank" rel="noopener" class="nav-cta">Hablemos</a></li>
 </ul>
 <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
@@ -641,6 +641,21 @@ document.querySelector('.hamburger').setAttribute('aria-expanded', 'false');
 document.querySelectorAll('.nav-links a').forEach(link => {
 link.addEventListener('click', () => { if (window.innerWidth <= 680) closeMobileMenu(); });
 });
+</script>
+
+<!-- Nav inteligente: si hay sesión, cambia "Iniciar sesión" por el acceso al panel -->
+<script type="module">
+  import { perfilActual } from './assets/supabase.js';
+  (async () => {
+    const link = document.getElementById('nav-login');
+    if (!link) return;
+    try {
+      const p = await perfilActual();
+      if (!p) return;
+      if (p.rol === 'admin') { link.textContent = 'Panel'; link.href = 'panel.html'; }
+      else { link.textContent = 'Panel de cliente'; link.href = 'portal.html'; }
+    } catch (e) { /* sin sesión: queda "Iniciar sesión" */ }
+  })();
 </script>
 </body>
 </html>
