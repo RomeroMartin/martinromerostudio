@@ -250,6 +250,17 @@ where email = 'TU-EMAIL@ejemplo.com'
 on conflict (id) do update set rol = 'admin';
 ```
 
+### 6.4 Cambios de esquema posteriores
+
+A medida que agregamos funciones, a veces hace falta correr un `ALTER TABLE` en el
+*SQL Editor*. Los voy anotando acá.
+
+```sql
+-- Guardar una "foto" de los datos del cliente/potencial cliente dentro del
+-- presupuesto, para poder re-exportarlo a PDF sin volver a completar nada.
+alter table public.documentos add column if not exists cliente_datos jsonb;
+```
+
 ---
 
 ## 7. Desplegar la Edge Function `crear-cliente` (paso T6)
