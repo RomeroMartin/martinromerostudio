@@ -69,7 +69,10 @@
     border: 1px solid var(--dark-line);
     box-shadow: 0 8px 40px rgba(0,0,0,0.35);
   }
-  .logo { margin-bottom: 2rem; display: flex; justify-content: center; }
+  .logo { margin-bottom: 2rem; display: flex; justify-content: center; align-items: center; gap: 0.55rem; }
+  .logo .fb { display: flex; flex-direction: column; line-height: 1.05; text-align: left; }
+  .logo .fb-name { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; color: #eceff3; }
+  .logo .fb-sub { font-family: 'Spline Sans Mono', monospace; font-size: 0.55rem; letter-spacing: 0.34em; color: #7fb2e8; }
   /* Ícono check */
   .check-circle {
     width: 72px;
@@ -181,11 +184,8 @@
 <div class="card">
 
   <div class="logo">
-    <svg width="200" height="34" viewBox="0 0 240 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Martin Romero Studio">
-      <g><rect x="0" y="5" width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="13" width="16" height="3" fill="#fff"/><rect x="7" y="13" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="13" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="13" width="3.5" height="8" fill="#fff"/></g>
-      <text x="40" y="19" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="-0.3" fill="#eceff3">Martin Romero</text>
-      <text x="40" y="31" font-family="'Spline Sans Mono', ui-monospace, monospace" font-size="8" letter-spacing="2.9" fill="#7fb2e8">STUDIO</text>
-    </svg>
+    <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Martin Romero Studio"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+    <span class="fb"><span class="fb-name">Martin Romero</span><span class="fb-sub">STUDIO</span></span>
   </div>
 
   <div class="check-circle">

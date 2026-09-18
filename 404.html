@@ -20,7 +20,10 @@ body{font-family:'Archivo',system-ui,sans-serif;background:var(--dark);color:var
 body::before{content:'';position:absolute;inset:0;background-image:linear-gradient(#ffffff0a 1px,transparent 1px),linear-gradient(90deg,#ffffff0a 1px,transparent 1px);background-size:64px 64px;pointer-events:none;}
 body::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom left,rgba(61,107,196,0.20) 0%,rgba(61,107,196,0.07) 32%,rgba(61,107,196,0.02) 58%,rgba(14,18,23,0) 80%);pointer-events:none;}
 .wrap{position:relative;z-index:1;max-width:520px;}
-.logo{margin-bottom:2.5rem;display:flex;justify-content:center;}
+.logo{margin-bottom:2.5rem;display:flex;justify-content:center;align-items:center;gap:0.55rem;}
+.logo .fb{display:flex;flex-direction:column;line-height:1.05;text-align:left;}
+.logo .fb-name{font-size:0.95rem;font-weight:600;letter-spacing:-0.02em;color:#eceff3;}
+.logo .fb-sub{font-family:'Spline Sans Mono',monospace;font-size:0.55rem;letter-spacing:0.34em;color:#7fb2e8;}
 .code{font-family:'Spline Sans Mono',monospace;font-size:clamp(4.5rem,18vw,8rem);font-weight:500;line-height:1;color:var(--accent-light);letter-spacing:0.02em;}
 .titulo{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:600;letter-spacing:-0.03em;line-height:1.15;margin-bottom:0.75rem;}
 .titulo .hl{color:var(--accent-light);}
@@ -36,11 +39,8 @@ body::after{content:'';position:absolute;inset:0;background:linear-gradient(to b
 <body>
 <div class="wrap">
 <div class="logo">
-<svg width="210" height="35" viewBox="0 0 240 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Martin Romero Studio">
-<g><rect x="0" y="5" width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="13" width="16" height="3" fill="#fff"/><rect x="7" y="13" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="13" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="13" width="3.5" height="8" fill="#fff"/></g>
-<text x="40" y="19" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="-0.3" fill="#eceff3">Martin Romero</text>
-<text x="40" y="31" font-family="'Spline Sans Mono', ui-monospace, monospace" font-size="8" letter-spacing="2.9" fill="#7fb2e8">STUDIO</text>
-</svg>
+<svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Martin Romero Studio"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
+<span class="fb"><span class="fb-name">Martin Romero</span><span class="fb-sub">STUDIO</span></span>
 </div>
 <div class="code">404</div>
 <div class="ornament"><div class="orn-line"></div><div class="orn-dot"></div><div class="orn-line"></div></div>
