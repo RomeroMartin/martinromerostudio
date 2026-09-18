@@ -65,6 +65,7 @@
 
   /* ── App ── */
   .topbar { background: var(--oscuro); color: #eceff3; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .topbar .isologo { text-decoration: none; }
   .topbar .isologo-name { color: #fff; }
   .topbar-right { display: flex; align-items: center; gap: 0.9rem; font-size: 0.8rem; color: var(--gris-2); }
   .wrap { max-width: 980px; margin: 0 auto; padding: 1.6rem 1.2rem 4rem; display: flex; flex-direction: column; gap: 1.4rem; }
@@ -132,10 +133,10 @@
 <!-- ══════════ APP ══════════ -->
 <div id="app" class="hidden">
   <div class="topbar">
-    <div class="isologo">
+    <a class="isologo" href="index.html" aria-label="Ir al inicio">
       <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#3d6bc4"/><rect x="7" y="8" width="16" height="3" fill="#fff"/><rect x="7" y="8" width="3.5" height="14" fill="#fff"/><rect x="19.5" y="8" width="3.5" height="14" fill="#fff"/><rect x="13.25" y="8" width="3.5" height="8" fill="#fff"/></svg>
-      <span class="isologo-text"><span class="isologo-name">Panel</span><span class="isologo-sub">studio</span></span>
-    </div>
+      <span class="isologo-name">Panel</span>
+    </a>
     <div class="topbar-right">
       <span id="topbar-email"></span>
       <button class="btn" id="btn-logout" type="button">Salir</button>
