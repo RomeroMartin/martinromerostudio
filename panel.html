@@ -90,6 +90,11 @@
   .badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.18rem 0.5rem; border-radius: 20px; border: 1px solid var(--linea); color: var(--gris); white-space: nowrap; }
   .badge.b-aceptado, .badge.b-entregado { color: var(--ok); border-color: #b7d8c4; background: #eef7f1; }
   .badge.b-enviado, .badge.b-en_proceso { color: var(--acento); border-color: #bcd3f0; background: #eef3fb; }
+  .badge.b-aviso { color: #8a5a00; border-color: #ecd49a; background: #fdf6e3; }
+  .badge.b-alerta { color: var(--alerta); border-color: #e2c2c2; background: #f9eeee; }
+  .aviso-soporte { background: #fdf6e3; border: 1px solid #ecd49a; color: #6b4600; border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.88rem; }
+  .aviso-soporte.rojo { background: #f9eeee; border-color: #e2c2c2; color: var(--alerta); }
+  .aviso-soporte a { color: inherit; font-weight: 600; }
   .badge.b-cancelado { color: var(--alerta); border-color: #e2c2c2; background: #f9eeee; }
 
   .msg { font-size: 0.82rem; padding: 0.6rem 0.8rem; border-radius: 8px; display: none; }
@@ -145,9 +150,20 @@
 
   <div class="wrap">
 
+    <div class="aviso-soporte hidden" id="aviso-soporte"></div>
+
     <div class="row-links">
       <a class="btn btn-primary linkbtn" href="presupuesto.html">+ Nuevo presupuesto</a>
     </div>
+
+    <!-- Soporte WebApps -->
+    <section class="card" id="card-soporte">
+      <div class="card-head">
+        <h2>Soporte WebApps</h2>
+        <span>El primer mes es gratis. Cargá la fecha de puesta en marcha.</span>
+      </div>
+      <div id="soporte-tabla"><p class="empty">Cargando…</p></div>
+    </section>
 
     <!-- Nuevo cliente -->
     <section class="card">
@@ -248,7 +264,7 @@
     $('login').classList.add('hidden');
     $('app').classList.remove('hidden');
     $('topbar-email').textContent = perfil.authEmail || '';
-    await Promise.all([cargarClientes(), cargarDocumentos()]);
+    await Promise.all([cargarClientes(), cargarDocumentos(), cargarSoporte()]);
   }
 
   // ── Login form ──────────────────────────────────────
@@ -388,6 +404,106 @@
         <td><a class="btn btn-mini" href="presupuesto.html?doc=${d.id}" target="_blank" rel="noopener">Ver / PDF</a></td>
       </tr>`).join('')}</tbody></table>`;
   }
+
+  // ── Soporte WebApps: aviso de cuándo empezar a cobrar ──
+  const SOPORTE_PRECIO_MSG = 'Plan Soporte WebApp';
+  const DIAS_AVISO = 7;
+
+  function fechaLocal(iso) {                     // 'YYYY-MM-DD' → Date a medianoche local
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+  function sumarMes(f) {                         // +1 mes (31/01 → 28/02)
+    const r = new Date(f.getFullYear(), f.getMonth() + 1, f.getDate());
+    return r.getDate() === f.getDate() ? r : new Date(f.getFullYear(), f.getMonth() + 2, 0);
+  }
+  const fmtFecha = f => f.toLocaleDateString('es-AR');
+
+  async function cargarSoporte() {
+    const cont = $('soporte-tabla');
+    const { data, error } = await db
+      .from('documentos')
+      .select('id, numero, estado, puesta_en_marcha, soporte_cobrando, cliente_datos, cliente:profiles!documentos_cliente_id_fkey(nombre)')
+      .contains('items', [{ id: 'webapp' }])
+      .in('estado', ['aceptado', 'en_proceso', 'entregado'])
+      .order('numero', { ascending: false });
+
+    if (error) {
+      cont.innerHTML = `<p class="empty">No se pudo cargar (¿falta correr el SQL de soporte en Supabase?): ${esc(error.message)}</p>`;
+      return;
+    }
+    if (!data.length) {
+      cont.innerHTML = '<p class="empty">No hay WebApps aceptadas o en proceso.</p>';
+      $('aviso-soporte').classList.add('hidden');
+      return;
+    }
+
+    const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+    let vencidas = 0, proximas = 0;
+
+    const filas = data.map(d => {
+      const nombre = esc((d.cliente && d.cliente.nombre) || (d.cliente_datos && d.cliente_datos.nombre) || 'Sin asignar');
+      let estado, cobro = '<span class="muted">—</span>';
+
+      if (d.soporte_cobrando) {
+        estado = '<span class="badge b-enviado">Cobrando</span>';
+      } else if (!d.puesta_en_marcha) {
+        estado = '<span class="badge">Falta la fecha</span>';
+      } else {
+        const hasta = sumarMes(fechaLocal(d.puesta_en_marcha));
+        const dias = Math.round((hasta - hoy) / 86400000);
+        cobro = fmtFecha(hasta);
+        if (dias <= 0) { vencidas++; estado = '<span class="badge b-alerta">Empezar a cobrar</span>'; }
+        else if (dias <= DIAS_AVISO) { proximas++; estado = `<span class="badge b-aviso">Cobrar en ${dias} día${dias === 1 ? '' : 's'}</span>`; }
+        else estado = `<span class="badge b-aceptado">Mes gratis · faltan ${dias} días</span>`;
+      }
+
+      const boton = d.soporte_cobrando
+        ? `<button class="btn btn-mini" type="button" data-cobrar="${d.id}" data-valor="0">Deshacer</button>`
+        : (d.puesta_en_marcha ? `<button class="btn btn-mini" type="button" data-cobrar="${d.id}" data-valor="1">Ya lo estoy cobrando</button>` : '');
+
+      return `<tr>
+        <td class="num">${formatoDoc(d.numero)}</td>
+        <td>${nombre}</td>
+        <td><input type="date" class="mono" value="${esc(d.puesta_en_marcha || '')}" data-fecha="${d.id}"></td>
+        <td class="num">${cobro}</td>
+        <td>${estado}</td>
+        <td>${boton}</td>
+      </tr>`;
+    });
+
+    cont.innerHTML = `<table><thead><tr>
+        <th>N°</th><th>Cliente</th><th>Puesta en marcha</th><th>Cobrar desde</th><th>Estado</th><th></th>
+      </tr></thead><tbody>${filas.join('')}</tbody></table>`;
+
+    const aviso = $('aviso-soporte');
+    if (vencidas || proximas) {
+      const partes = [];
+      if (vencidas) partes.push(`${vencidas} WebApp${vencidas === 1 ? '' : 's'} ya ${vencidas === 1 ? 'terminó' : 'terminaron'} el mes gratis: hay que empezar a cobrar el ${SOPORTE_PRECIO_MSG}`);
+      if (proximas) partes.push(`${proximas} ${proximas === 1 ? 'termina' : 'terminan'} el mes gratis en ${DIAS_AVISO} días o menos`);
+      aviso.innerHTML = partes.join('. ') + '. <a href="#card-soporte">Ver</a>';
+      aviso.classList.toggle('rojo', vencidas > 0);
+      aviso.classList.remove('hidden');
+    } else {
+      aviso.classList.add('hidden');
+    }
+  }
+
+  $('soporte-tabla').addEventListener('change', async (e) => {
+    const inp = e.target.closest('[data-fecha]');
+    if (!inp) return;
+    const { error } = await db.from('documentos').update({ puesta_en_marcha: inp.value || null }).eq('id', inp.dataset.fecha);
+    if (error) alert('No se pudo guardar la fecha: ' + error.message);
+    cargarSoporte();
+  });
+
+  $('soporte-tabla').addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-cobrar]');
+    if (!btn) return;
+    const { error } = await db.from('documentos').update({ soporte_cobrando: btn.dataset.valor === '1' }).eq('id', btn.dataset.cobrar);
+    if (error) alert('No se pudo guardar: ' + error.message);
+    cargarSoporte();
+  });
 
   verificarSesion();
 </script>

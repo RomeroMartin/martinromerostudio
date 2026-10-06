@@ -20,6 +20,7 @@ Los precios están escritos a mano en **3 archivos**. Si cambiás uno, hay que c
 | Módulo interactivo (desde) | $45.000 | — | Adicionales ("Desde $45.000") | `data-min="45000"`, texto `Desde $ 45.000` (2 veces), aviso "arranca en $ 45.000" y placeholder `Desde 45000` |
 | Mantenimiento & Base | $18.000 / mes | link "…desde $18.000/mes" | tarjeta del plan mensual | texto `$ 18.000` y `data-price="18000"` |
 | Partner Digital Full | $38.000 / mes | link "…desde $38.000/mes" | tarjeta del plan mensual | texto `$ 38.000` y `data-price="38000"` |
+| Plan Soporte WebApp | $44.000 / mes | — | tarjeta en la pestaña WebApps | — (en el presupuesto se menciona "valor vigente", sin monto) |
 
 ## Pasos
 

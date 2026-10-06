@@ -261,6 +261,13 @@ A medida que agregamos funciones, a veces hace falta correr un `ALTER TABLE` en 
 alter table public.documentos add column if not exists cliente_datos jsonb;
 ```
 
+```sql
+-- Soporte de WebApps: fecha de puesta en marcha (el primer mes es gratis) y
+-- marca de "ya lo estoy cobrando", para el aviso del panel.
+alter table public.documentos add column if not exists puesta_en_marcha date;
+alter table public.documentos add column if not exists soporte_cobrando boolean not null default false;
+```
+
 ---
 
 ## 7. Desplegar la Edge Function `crear-cliente` (paso T6)
