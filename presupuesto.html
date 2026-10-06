@@ -834,6 +834,8 @@
         precioInput.value = item.precio || 0;
         precioInput.dispatchEvent(new Event('input'));
       } else {
+        // Respetar el precio con el que se guardó, aunque hoy la lista haya cambiado
+        if (item.precio != null) chk.dataset.price = item.precio;
         chk.checked = true;
         chk.dispatchEvent(new Event('change'));
       }
