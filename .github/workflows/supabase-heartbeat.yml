@@ -25,7 +25,7 @@ jobs:
 
       - name: Escribir en la base de datos
         run: |
-          status=$(curl -s -o response.json -w '%{http_code}' -X POST \
+          status=$(curl -sS -o response.json -w '%{http_code}' -X POST \
             "$SUPABASE_URL/rest/v1/rpc/heartbeat" \
             -H "apikey: $SUPABASE_KEY" \
             -H "Authorization: Bearer $SUPABASE_KEY" \
