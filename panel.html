@@ -279,8 +279,8 @@
     });
     $('login-btn').disabled = false;
     $('login-btn').textContent = 'Ingresar';
-    if (error) return showMsg($('login-msg'), 'err', 'Email o contraseña incorrectos.');
-    verificarSesion();
+    if (error) return showMsg($('login-msg'), 'err', (error.status === 400 || error.status === 401 || error.status === 422) ? 'Email o contraseña incorrectos.' : 'No se pudo conectar con el servidor. Probá de nuevo en unos minutos.');
+    verificarSesion().catch(() => mostrarLogin('No se pudo conectar con el servidor. Probá de nuevo en unos minutos.'));
   });
 
   $('btn-logout').addEventListener('click', async () => {
@@ -505,7 +505,7 @@
     cargarSoporte();
   });
 
-  verificarSesion();
+  verificarSesion().catch(() => mostrarLogin('No se pudo conectar con el servidor. Probá de nuevo en unos minutos.'));
 </script>
 </body>
 </html>
